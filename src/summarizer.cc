@@ -4,6 +4,15 @@ using namespace freeling;
 using namespace std;
 
 summarizer::summarizer(const wstring &datFile) {
+
+	// Default configuration
+	hypernymy_depth = 2;
+    remove_used_lexical_chains = FALSE;
+    only_strong = FALSE;
+    num_words = 50;
+    this->semdb_path = semdb_path;
+	//used_tags = {L"SW", L"HN", L"SCG"};
+
 	config_file cfg; 
 	enum sections {GENERAL, RELATIONS};
     cfg.add_section(L"General",GENERAL);
@@ -38,6 +47,11 @@ summarizer::summarizer(const wstring &datFile) {
         sin.str(line);
         wstring elem;
         sin >> elem;
+        if (elem == L"HN") {
+        	wstring value;
+        	sin >> value;
+        	hypernymy_depth = stoi(value);
+        }
         used_tags.insert(elem);
       	break;
       }
@@ -133,7 +147,7 @@ relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const {
 	if(ws == L"SW") { 
 		rel = new SameWord(sout);
 	} else if (ws == L"HN") {
-		rel = new Hypernymy(2, semdb_path, sout);
+		rel = new Hypernymy(hypernymy_depth, semdb_path, sout);
 	} else if (ws == L"SCG") {
 		rel = new SameCorefGroup(sout);
 	}

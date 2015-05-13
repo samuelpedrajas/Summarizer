@@ -25,7 +25,7 @@ public:
 private:
     bool remove_used_lexical_chains;
     bool only_strong;
-    int num_words;
+    int num_words, hypernymy_depth;
     std::wstring semdb_path;
     std::set<std::wstring> used_tags;
 

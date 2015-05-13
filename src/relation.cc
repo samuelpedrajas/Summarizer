@@ -119,7 +119,6 @@ double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<
 										const set<wstring> &unique_words) {
 	int n = words.size();
 	const word_pos &wp_core = count_relations(n, relations);
-	(*this->sout) << L"EL NUCLEO ES: " << wp_core.w.get_form() << endl;
 
 	vector<int> num_words_dist(depth+1, 0);
 	num_words_dist[0] = 1;

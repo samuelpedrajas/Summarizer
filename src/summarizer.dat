@@ -1,12 +1,12 @@
 <General>
 RemoveUsedChains false
 OnlyStrong false
-NumWords 50
+NumWords 100
 SemDBPath /usr/local/share/freeling/en/semdb.dat
 </General>
 
 <Relations>
 SW
-HN
-SCG 2
+HN 4
+SCG
 </Relations>

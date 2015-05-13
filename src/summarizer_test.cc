@@ -62,7 +62,7 @@ int main (int argc, char **argv) {
   }
   
   
-  summarizer sum(L"/home/samuel/tfg/09-05-2015/summarizer.dat");
+  summarizer sum(L"/home/samuel/Summarizer/src/summarizer.dat");
   list<word_pos> selected_sentences = sum.summarize(wcout, doc);
   for (list<word_pos>::const_iterator it = selected_sentences.begin(); it != selected_sentences.end(); it++) {
     const sentence & s = it->s;

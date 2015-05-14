@@ -66,7 +66,7 @@ bool SameWord::compute_word (const word &w, const sentence &s, const document &d
 
 double SameWord::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
 									   const set<wstring> &unique_words) {
-	return (1.0 - (double)unique_words.size()/(double)words.size());
+	return (1.0 - 1.0/(double)words.size());
 }
 
 Hypernymy::Hypernymy(int k, const wstring &semfile, wostream &sout) : relation(L"Hypernymy", L"^(VB|NN)") {
@@ -129,9 +129,10 @@ double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<
 	}
 
 	double res = 0;
-
+	double alpha = 0.9;
 	for (int i = 0; i < depth + 1; i++) {
-		res += (1.0 - ((double)i / (depth + 1.0))) * ((double)num_words_dist[i] / n);
+		res += alpha * ((double)num_words_dist[i] / n);
+		alpha *= 0.9;
 		(*this->sout) << L"DISTANCIA " << i << L": " << num_words_dist[i] << endl;
 	}
 
@@ -230,10 +231,10 @@ bool SameCorefGroup::compute_word (const word &w, const sentence &s, const docum
 			bool sfound = FALSE;
 			for(list<int>::const_iterator it_cid = coref_id_mentions.begin(); it_cid != coref_id_mentions.end(); it_cid++) {
 				const mention &m = doc.get_mention(*it_cid);
-				const sentence &s_mention = *(m.get_sentence());
+				int s_mention = m.get_n_sentence();
 				int pos_mention = m.get_head().get_position();
-				if (s_mention == s && pos_mention == position) ffound = TRUE; // TODO: No comparar las dos posiciones de memoria
-				if (s_mention == wp2.s && pos_mention == wp2.position) sfound = TRUE;
+				if (s_mention == n_sentence && pos_mention == position) ffound = TRUE; // TODO: No comparar las dos posiciones de memoria
+				if (s_mention == wp2.n_sentence && pos_mention == wp2.position) sfound = TRUE;
 				if(ffound && sfound) {
 					word_pos * wp;
 					wp = new word_pos(w, s, n_paragraph, n_sentence, position);

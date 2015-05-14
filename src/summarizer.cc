@@ -128,11 +128,15 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 			const word_pos wp = *it_wp;
 
 			const sentence & s = wp.s;
-			int s_size = s.get_words().size();
+			if (sent_set.find(&s) == sent_set.end()) {
+				// Counting the number of words (here we exclude commas, points, exclamation symbols, etc...)
+				int s_size = 0;
+				for (sentence::const_iterator it_s = s.words_begin(); it_s != s.words_end(); it_s++)
+					if (it_s->get_tag()[0] != L'F') s_size++;
 
-			if (s_size + acc_n_words <= num_words) {
-				bool inserted = sent_set.insert(&s).second;
-				if (inserted) {
+				sout << L"NUM words: " << s_size << endl;
+				if (s_size + acc_n_words <= num_words) {
+					sent_set.insert(&s);
 					acc_n_words += s_size;
 					wp_list.push_back(wp);
 				}

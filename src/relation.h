@@ -58,6 +58,8 @@ class SameWord : public relation {
 
 public:
 
+	SameWord();
+
 	SameWord(std::wostream &sout);
 
 	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,

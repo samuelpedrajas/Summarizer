@@ -41,6 +41,9 @@ bool relation::compute_word (const word &w, const sentence &s, const document &d
 
 }
 
+SameWord::SameWord() : relation(L"Same Word", L"^(NP|VB|NN)") {
+}
+
 SameWord::SameWord(wostream &sout) : relation(L"Same Word", L"^(NP|VB|NN)") {
 	this->sout = &sout;
 }

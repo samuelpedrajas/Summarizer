@@ -3,6 +3,7 @@ RemoveUsedChains false
 OnlyStrong false
 NumWords 100
 SemDBPath /usr/local/share/freeling/en/semdb.dat
+MaxDistanceBetweenWords 3
 </General>
 
 <Relations>

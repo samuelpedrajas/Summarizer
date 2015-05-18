@@ -11,6 +11,7 @@ summarizer::summarizer(const wstring &datFile) {
     only_strong = FALSE;
     num_words = 50;
     this->semdb_path = semdb_path;
+    relation::max_distance = 50;
 	//used_tags = {L"SW", L"HN", L"SCG"};
 
 	config_file cfg; 
@@ -38,6 +39,8 @@ summarizer::summarizer(const wstring &datFile) {
         	num_words = stoi(value);
         } else if (key == L"SemDBPath") {
         	semdb_path = value;
+        } else if (key == L"MaxDistanceBetweenWords") {
+        	relation::max_distance = stoi(value);
         }
         break;
       }

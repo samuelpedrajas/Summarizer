@@ -43,10 +43,10 @@ public:
 
 	virtual bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
 		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::set<std::wstring> &unique_words) const = 0;
+		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const = 0;
 
 	virtual double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::set<std::wstring> &unique_words) = 0;
+		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) = 0;
 
 protected:
 
@@ -61,11 +61,11 @@ public:
 	SameWord(std::wostream &sout);
 
 	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::set<std::wstring> &unique_words);
+		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words);
 
 	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
 		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::set<std::wstring> &unique_words) const;
+		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
 };
 
 class Hypernymy : public relation {
@@ -75,11 +75,11 @@ public:
 	Hypernymy(int k, const std::wstring &semfile, std::wostream &sout);
 
 	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::set<std::wstring> &unique_words);
+		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words);
 
 	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
 		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::set<std::wstring> &unique_words) const;
+		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
 
 private:
 
@@ -98,10 +98,10 @@ public:
 	SameCorefGroup(std::wostream &sout);
 
 	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::set<std::wstring> &unique_words);
+		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words);
 
 	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
 		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::set<std::wstring> &unique_words) const;
+		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
 };
 

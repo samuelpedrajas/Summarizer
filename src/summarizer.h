@@ -47,5 +47,7 @@ private:
 
 	std::list<word_pos> first_word(std::wostream &sout, std::map<std::wstring, std::list<lexical_chain> > &chains_type) const;
 
+    std:: list<word_pos> first_most_weighted_word(std::wostream &sout, std::map<std::wstring, std::list<lexical_chain> > &chains) const;
+
 	relation * tag_to_rel(const std::wstring ws, std::wostream &sout) const;
 };

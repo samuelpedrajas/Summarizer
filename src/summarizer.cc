@@ -117,13 +117,13 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 	list<word_pos> wp_list;
 	int acc_n_words = 0;
 	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
-		const list<word_pos> * wps = it->get_words();
-		list<word_pos>::const_iterator end_wps = wps->end();
+		const list<word_pos> &wps = it->get_words();
+		list<word_pos>::const_iterator end_wps = wps.end();
 		if (remove_used_lexical_chains) {
-			end_wps = wps->begin();
+			end_wps = wps.begin();
 			end_wps++;
 		}
-		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != end_wps; it_wp++) {
+		for(list<word_pos>::const_iterator it_wp = wps.begin(); it_wp != end_wps; it_wp++) {
 
 			const word_pos wp = *it_wp;
 
@@ -143,6 +143,15 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 			}
 		}
 	}
+	return wp_list;
+}
+
+list<word_pos> summarizer::first_most_weighted_word(wostream &sout, map<wstring, list<lexical_chain> > &chains) const {
+	list<lexical_chain> lexical_chains = map_to_lists(chains);
+	lexical_chains.sort(compare_lexical_chains);
+	set<const sentence*> sent_set;
+	list<word_pos> wp_list;
+
 	return wp_list;
 }
 

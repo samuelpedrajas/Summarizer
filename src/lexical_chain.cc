@@ -7,7 +7,7 @@ lexical_chain::lexical_chain(relation * r, const word &w, const sentence &s, int
 	rel = r;
 	word_pos wp(w, s, n_paragraph, n_sentence, position);
 	words.push_back(wp);
-	unique_words.insert(w.get_form());
+	unique_words[w.get_form()] = make_pair<int, word_pos*>(1, &wp);
 	score = -1;
 }
 
@@ -20,8 +20,8 @@ double lexical_chain::get_score() {
 	return score;
 }
 
-const list<word_pos> * lexical_chain::get_words() const {
-	return &words;
+const list<word_pos> &lexical_chain::get_words() const {
+	return words;
 }
 
 int lexical_chain::get_number_of_words() const {

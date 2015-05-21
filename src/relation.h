@@ -18,6 +18,10 @@ struct word_pos {
 
     bool operator==(word_pos other) const;
 
+    bool operator<(word_pos other) const;
+
+    bool operator>(word_pos other) const;
+
 	std::wstring toString() const;
 };
 

@@ -11,7 +11,7 @@ summarizer::summarizer(const wstring &datFile) {
     only_strong = FALSE;
     num_words = 50;
     this->semdb_path = semdb_path;
-	//used_tags = {L"SW", L"HN", L"SCG"};
+    heuristic = L"first_word";
 
 	config_file cfg; 
 	enum sections {GENERAL, RELATIONS};
@@ -59,7 +59,9 @@ summarizer::summarizer(const wstring &datFile) {
       default: break;
       }
     }
-    cfg.close(); 
+    cfg.close();
+
+    if (used_tags.size() == 0) used_tags = {L"SW", L"HN", L"SCG"};
 
     TRACE(1,L"Module sucessfully loaded");
 }
@@ -123,7 +125,7 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 			end_wps = wps->begin();
 			end_wps++;
 		}
-		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != end_wps; it_wp++) {
+		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != end_wps && acc_n_words < num_words; it_wp++) {
 
 			const word_pos wp = *it_wp;
 
@@ -146,37 +148,62 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 	return wp_list;
 }
 
-struct order_by_scores {
-  bool operator() (const pair<int, word_pos*> &sc_wp1, const pair<int, word_pos*> &sc_wp2) const
-  {return sc_wp1.first > sc_wp2.first;}
-};
+bool order_by_scores (const pair<int, const word_pos*> &sc_wp1, const pair<int, const word_pos*> &sc_wp2)
+{
+	return sc_wp1.first > sc_wp2.first;
+}
 
 list<word_pos> summarizer::sum_of_chain_weights(wostream &sout, map<wstring, list<lexical_chain> > &chains) const {
 	list<lexical_chain> lexical_chains = map_to_lists(chains);
 	lexical_chains.sort(compare_lexical_chains);
-	unordered_map<int, pair<int, word_pos> > sentence_scores;
 
+	// The key is the sentence number, the first value of the pair is the score and the second is the
+	// first word_pos that reference the sentence of the key
+	unordered_map<int, pair<int, const word_pos*> > sentence_scores;
+
+	// Here we score the sentences that have at least one word in a lexical chain
 	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
 		const list<word_pos> * wps = it->get_words();
 
 		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != wps->end(); it_wp++) {
-			unordered_map<int, pair<int, word_pos> >::iterator it_ss = sentence_scores.find(it_wp->n_sentence);
+			unordered_map<int, pair<int, const word_pos*> >::iterator it_ss = sentence_scores.find(it_wp->n_sentence);
 			if (it_ss != sentence_scores.end()) {
 				(it_ss->second).first++;
 			} else {
-				sentence_scores[it_wp->n_sentence] = make_pair(1, *it_wp);
+				sentence_scores[it_wp->n_sentence] = make_pair(1, &*it_wp);
 			}
 		}
 	}
 
-	set<pair<int, word_pos>, order_by_scores> wp_set;
-	for (unordered_map<int, pair<int, word_pos> >::const_iterator it = sentence_scores.begin(); it != sentence_scores.end(); it++) {
-		wp_set.insert(it->second);
+	// We insert every pair in a list and then we order by the score
+	list<pair<int, const word_pos*> > score_wp_list;
+	for (unordered_map<int, pair<int, const word_pos*> >::const_iterator it = sentence_scores.begin(); it != sentence_scores.end(); it++) {
+		score_wp_list.push_back(it->second);
+		sout << L"SENTENCE: " << it->second.second->n_sentence << L" SCORE: " << it->second.first << endl;
 	}
+
+	score_wp_list.sort(order_by_scores);
+
+	// Here we select the sentences with best score and insert them in a list (until the desired number of words is reached)
+	int acc_n_words = 0;
 	list<word_pos> wp_list;
-	for (set<pair<int, word_pos>, order_by_scores>::const_iterator it = wp_set.begin(); it != wp_set.end(); it++) {
-		wp_list.push_back(*(it->second));
+	for (list<pair<int, const word_pos*> >::const_iterator it = score_wp_list.begin();
+			it != score_wp_list.end() && acc_n_words < num_words; it++) {
+		int s_size = 0;
+		const word_pos *wp = it->second;
+		const sentence &s = (wp->s);
+
+		// Counting the number of words (here we exclude commas, points, exclamation symbols, etc...)
+		for (sentence::const_iterator it_s = s.words_begin(); it_s != s.words_end(); it_s++)
+			if (it_s->get_tag()[0] != L'F') s_size++;
+
+		sout << L"NUM words: " << s_size << endl;
+		if (s_size + acc_n_words <= num_words) {
+			acc_n_words += s_size;
+			wp_list.push_back(*wp);
+		}
 	}
+
 	return wp_list;
 }
 
@@ -190,12 +217,6 @@ relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const {
 		rel = new SameCorefGroup(sout);
 	}
 	return rel;
-}
-
-bool compare_word_pos (const word_pos& first, const word_pos& second) {
-  if (first.n_paragraph < second.n_paragraph) return TRUE;
-  else if (first.n_paragraph > second.n_paragraph) return FALSE;
-  return first.n_sentence < second.n_sentence;
 }
 
 map<wstring, list<lexical_chain>> summarizer::build_lexical_chains(wostream &sout, const document &doc) {
@@ -286,7 +307,7 @@ list<word_pos> summarizer::summarize(wostream &sout, const document &doc) {
 	// print chains
 	print_lexical_chains(chains, sout);
 
-	list<word_pos> res = first_word(sout, chains);
-	res.sort(compare_word_pos);
+	list<word_pos> res = sum_of_chain_weights(sout, chains);
+	res.sort();
 	return(res);
 }

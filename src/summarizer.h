@@ -28,6 +28,7 @@ private:
     int num_words, hypernymy_depth;
     std::wstring semdb_path;
     std::set<std::wstring> used_tags;
+    std::wstring heuristic;
 
     std::map<std::wstring, std::list<lexical_chain>> build_lexical_chains(std::wostream &sout, const freeling::document &doc);
 

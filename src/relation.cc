@@ -13,6 +13,16 @@ bool word_pos::operator==(word_pos other) const {
     return n_paragraph == other.n_paragraph && n_sentence == other.n_sentence && position == other.position;
 }
 
+bool word_pos::operator<(word_pos other) const {
+	if (n_sentence < other.n_sentence) return true;
+    return n_sentence == other.n_sentence && position < other.position;
+}
+
+bool word_pos::operator>(word_pos other) const {
+	if (n_sentence > other.n_sentence) return true;
+    return n_sentence == other.n_sentence && position > other.position;
+}
+
 wstring word_pos::toString() const {
 	wstring res = w.get_form() + L" [Paragraph " + to_wstring(n_paragraph) + L", Sentence " + to_wstring(n_sentence) + L", Position " + to_wstring(position) + L"]";
 	return res;

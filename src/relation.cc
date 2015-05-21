@@ -41,6 +41,8 @@ relation::relation(const wstring s, const wstring t) : label(s), compatible_tag(
 
 }
 
+int relation::max_distance = 0;
+
 bool relation::is_compatible(const word &w) const {
 	return compatible_tag.search(w.get_tag());
 }
@@ -58,20 +60,26 @@ SameWord::SameWord(wostream &sout) : relation(L"Same Word", L"^(NP|VB|NN)") {
 bool SameWord::compute_word (const word &w, const sentence &s, const document &doc,
 							 int n_paragraph, int n_sentence, int position, list<word_pos> &words,
 							 list<related_words> &relations, set<wstring> &unique_words) const {
+	bool found = false;
+	word_pos * wp;
 
 	if (words.size() > 0 && is_compatible(w)) {
-		if (words.begin()->w == w) {
-			word_pos * wp = new word_pos(w, s, n_paragraph, n_sentence, position);
-			for (list<word_pos>::const_iterator it_w = words.begin(); it_w != words.end(); it_w++) {
+		for (list<word_pos>::const_iterator it_w = words.begin(); it_w != words.end(); it_w++) {
+			if (it_w->w.get_form() == w.get_form() && (n_sentence - it_w->n_sentence) <= max_distance) {
+				if (!found) {
+					wp = new word_pos(w, s, n_paragraph, n_sentence, position);
+					found = true;
+				}
 				related_words rel_w(*wp, *it_w, 1);
 				relations.push_back(rel_w);
 			}
-			words.push_back(*wp);
-			unique_words.insert(w.get_form());
-			return TRUE;
 		}
 	}
-	return FALSE;
+	if (found) {
+		words.push_back(*wp);
+		unique_words.insert(w.get_form());
+	}
+	return found;
 }
 
 double SameWord::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
@@ -174,7 +182,7 @@ bool Hypernymy::compute_word (const word &w, const sentence &s, const document &
 
 		for (list<word_pos>::const_iterator it_w = words.begin(); it_w != words.end(); it_w++) {
 			const word &w2 = it_w->w;
-			if (w.get_form() != w2.get_form()) {
+			if (w.get_form() != w2.get_form() && (n_sentence - it_w->n_sentence) <= max_distance) {
 				const list<pair<wstring,double>> & ss1 = w.get_senses();
 				const list<pair<wstring,double>> & ss2 = w2.get_senses();
 				if (ss1.empty() || ss2.empty()) return FALSE;

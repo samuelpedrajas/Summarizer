@@ -12,6 +12,8 @@ summarizer::summarizer(const wstring &datFile) {
     num_words = 50;
     this->semdb_path = semdb_path;
     heuristic = L"FirstWord"; // FirstWord, FirstMostWeightedWord, SumOfChainWeights
+    relation::max_distance = 50;
+	//used_tags = {L"SW", L"HN", L"SCG"};
 
 	config_file cfg; 
 	enum sections {GENERAL, RELATIONS};
@@ -40,6 +42,8 @@ summarizer::summarizer(const wstring &datFile) {
         	semdb_path = value;
         } else if (key == L"Heuristic") {
         	heuristic = value;
+        } else if (key == L"MaxDistanceBetweenWords") {
+        	relation::max_distance = stoi(value);
         }
         break;
       }

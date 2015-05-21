@@ -40,6 +40,7 @@ class relation {
 public:
 
 	const std::wstring label;
+	static int max_distance;
 
 	relation(const std::wstring s, const std::wstring t);
 

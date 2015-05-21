@@ -146,6 +146,40 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 	return wp_list;
 }
 
+struct order_by_scores {
+  bool operator() (const pair<int, word_pos*> &sc_wp1, const pair<int, word_pos*> &sc_wp2) const
+  {return sc_wp1.first > sc_wp2.first;}
+};
+
+list<word_pos> summarizer::sum_of_chain_weights(wostream &sout, map<wstring, list<lexical_chain> > &chains) const {
+	list<lexical_chain> lexical_chains = map_to_lists(chains);
+	lexical_chains.sort(compare_lexical_chains);
+	unordered_map<int, pair<int, word_pos> > sentence_scores;
+
+	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
+		const list<word_pos> * wps = it->get_words();
+
+		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != wps->end(); it_wp++) {
+			unordered_map<int, pair<int, word_pos> >::iterator it_ss = sentence_scores.find(it_wp->n_sentence);
+			if (it_ss != sentence_scores.end()) {
+				(it_ss->second).first++;
+			} else {
+				sentence_scores[it_wp->n_sentence] = make_pair(1, *it_wp);
+			}
+		}
+	}
+
+	set<pair<int, word_pos>, order_by_scores> wp_set;
+	for (unordered_map<int, pair<int, word_pos> >::const_iterator it = sentence_scores.begin(); it != sentence_scores.end(); it++) {
+		wp_set.insert(it->second);
+	}
+	list<word_pos> wp_list;
+	for (set<pair<int, word_pos>, order_by_scores>::const_iterator it = wp_set.begin(); it != wp_set.end(); it++) {
+		wp_list.push_back(*(it->second));
+	}
+	return wp_list;
+}
+
 relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const { 
 	relation * rel;
 	if(ws == L"SW") { 

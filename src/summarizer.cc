@@ -11,7 +11,7 @@ summarizer::summarizer(const wstring &datFile) {
     only_strong = FALSE;
     num_words = 50;
     this->semdb_path = semdb_path;
-    heuristic = L"first_word";
+    heuristic = L"FirstWord"; // FirstWord, FirstMostWeightedWord, SumOfChainWeights
 
 	config_file cfg; 
 	enum sections {GENERAL, RELATIONS};
@@ -38,6 +38,8 @@ summarizer::summarizer(const wstring &datFile) {
         	num_words = stoi(value);
         } else if (key == L"SemDBPath") {
         	semdb_path = value;
+        } else if (key == L"Heuristic") {
+        	heuristic = value;
         }
         break;
       }
@@ -307,7 +309,15 @@ list<word_pos> summarizer::summarize(wostream &sout, const document &doc) {
 	// print chains
 	print_lexical_chains(chains, sout);
 
-	list<word_pos> res = sum_of_chain_weights(sout, chains);
+	list<word_pos> res;
+	if (heuristic == L"FirstMostWeightedWord") {
+
+	} else if (heuristic == L"SumOfChainWeights") {
+		res = sum_of_chain_weights(sout, chains);
+	} else {
+		res = first_word(sout, chains);
+	}
+
 	res.sort();
 	return(res);
 }

@@ -3,7 +3,7 @@ RemoveUsedChains false
 OnlyStrong false
 NumWords 16
 SemDBPath /usr/local/share/freeling/en/semdb.dat
-Heuristic FirstWord
+Heuristic SumOfChainWeights
 </General>
 
 <Relations>

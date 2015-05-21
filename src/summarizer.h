@@ -28,6 +28,7 @@ private:
     int num_words, hypernymy_depth;
     std::wstring semdb_path;
     std::set<std::wstring> used_tags;
+    std::wstring heuristic;
 
     std::map<std::wstring, std::list<lexical_chain>> build_lexical_chains(std::wostream &sout, const freeling::document &doc);
 
@@ -46,6 +47,8 @@ private:
 	std::list<lexical_chain> map_to_lists(std::map<std::wstring, std::list<lexical_chain> > &chains_type) const;
 
 	std::list<word_pos> first_word(std::wostream &sout, std::map<std::wstring, std::list<lexical_chain> > &chains_type) const;
+
+    std::list<word_pos> sum_of_chain_weights(std::wostream &sout, std::map<std::wstring, std::list<lexical_chain> > &chains) const;
 
 	relation * tag_to_rel(const std::wstring ws, std::wostream &sout) const;
 };

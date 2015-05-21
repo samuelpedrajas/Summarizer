@@ -8,11 +8,11 @@
 using namespace std;
 using namespace freeling;
 
-struct SameWordFixture {
+struct BaseFixture {
 	lexical_chain * lc;
 	document * doc;
 
-	SameWordFixture () {
+	BaseFixture () {
 		wstring freeling_path = L"/usr/local/share/freeling/";
 
 
@@ -38,12 +38,12 @@ struct SameWordFixture {
 		anlz.analyze(text,*doc,true);
 	}
 
-	~SameWordFixture () {
+	~BaseFixture () {
 	}
 
 };
 
-BOOST_FIXTURE_TEST_SUITE(SameWordTestSuite, SameWordFixture)
+BOOST_FIXTURE_TEST_SUITE(SameWordTestSuite, BaseFixture)
  
 BOOST_AUTO_TEST_CASE(specialTheory)
 {

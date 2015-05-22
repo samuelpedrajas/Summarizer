@@ -1,10 +1,10 @@
 <General>
 RemoveUsedChains false
-OnlyStrong false
-NumWords 16
+OnlyStrong true
+NumWords 100
 SemDBPath /usr/local/share/freeling/en/semdb.dat
 Heuristic SumOfChainWeights
-MaxDistanceBetweenWords 3
+MaxDistanceBetweenWords 20
 </General>
 
 <Relations>

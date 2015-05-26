@@ -1,6 +1,6 @@
 <General>
 RemoveUsedChains false
-OnlyStrong true
+OnlyStrong false
 NumWords 100
 SemDBPath /usr/local/share/freeling/en/semdb.dat
 Heuristic SumOfChainWeights

@@ -227,12 +227,12 @@ relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const {
 
 map<wstring, list<lexical_chain>> summarizer::build_lexical_chains(wostream &sout, const document &doc) {
 	map<wstring, list<lexical_chain>> chains;
-	int i = 0;
 	for (set<wstring>::const_iterator it_t = used_tags.begin(); it_t != used_tags.end(); it_t++) {
 		wstring tag = *it_t;
 		relation * rel = tag_to_rel(tag, sout);
+		int i = 0;
+		int j = 0;
 		for (list<paragraph>::const_iterator it_p = doc.begin(); it_p != doc.end(); it_p++) {
-			int j = 0;
 			for (list<sentence>::const_iterator it_s = it_p->begin(); it_s != it_p->end(); it_s++) {
 				int k = 0;
 				for (list<word>::const_iterator it_w = it_s->begin(); it_w != it_s->end(); it_w++) {
@@ -281,7 +281,7 @@ void summarizer::remove_weak_lexical_chains(map<wstring, list<lexical_chain>> &c
 
 		while (it != lexical_chains.end())
 		{
-			if(it->get_score() <= (avg + 2 * sd)) {
+			if(it->get_score() <= (avg + 2.0 * sd)) {
 				it = lexical_chains.erase(it);
 			} else it++;
 		}

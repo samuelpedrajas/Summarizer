@@ -8,7 +8,7 @@ MaxDistanceBetweenWords 20
 </General>
 
 <Relations>
-SW
-HN 3
-SCG
+SameWord
+Hypernymy 3
+SameCoreferenceGroup
 </Relations>

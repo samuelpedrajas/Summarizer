@@ -13,7 +13,7 @@ summarizer::summarizer(const wstring &datFile) {
     this->semdb_path = semdb_path;
     heuristic = L"FirstWord"; // FirstWord, FirstMostWeightedWord, SumOfChainWeights
     relation::max_distance = 50;
-	//used_tags = {L"SW", L"HN", L"SCG"};
+	//used_tags = {L"SameWord", L"Hypernymy", L"SameCoreferenceGroup"};
 
 	config_file cfg; 
 	enum sections {GENERAL, RELATIONS};
@@ -53,7 +53,7 @@ summarizer::summarizer(const wstring &datFile) {
         sin.str(line);
         wstring elem;
         sin >> elem;
-        if (elem == L"HN") {
+        if (elem == L"Hypernymy") {
         	wstring value;
         	sin >> value;
         	hypernymy_depth = stoi(value);
@@ -67,7 +67,7 @@ summarizer::summarizer(const wstring &datFile) {
     }
     cfg.close();
 
-    if (used_tags.size() == 0) used_tags = {L"SW", L"HN", L"SCG"};
+    if (used_tags.size() == 0) used_tags = {L"SameWord", L"Hypernymy", L"SameCoreferenceGroup"};
 
     TRACE(1,L"Module sucessfully loaded");
 }
@@ -215,11 +215,11 @@ list<word_pos> summarizer::sum_of_chain_weights(wostream &sout, map<wstring, lis
 
 relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const { 
 	relation * rel;
-	if(ws == L"SW") { 
+	if(ws == L"SameWord") { 
 		rel = new SameWord(sout);
-	} else if (ws == L"HN") {
+	} else if (ws == L"Hypernymy") {
 		rel = new Hypernymy(hypernymy_depth, semdb_path, sout);
-	} else if (ws == L"SCG") {
+	} else if (ws == L"SameCoreferenceGroup") {
 		rel = new SameCorefGroup(sout);
 	}
 	return rel;

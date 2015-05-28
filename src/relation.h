@@ -77,7 +77,7 @@ class Hypernymy : public relation {
 
 public:
 
-	Hypernymy(int k, const std::wstring &semfile, std::wostream &sout);
+	Hypernymy(int k, double alpha, const std::wstring &semfile, std::wostream &sout);
 
 	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
 		const std::set<std::wstring> &unique_words);
@@ -90,6 +90,7 @@ private:
 
 	static freeling::semanticDB * semdb;
 	static int depth;
+	static double alpha;
 
 	int hypernymyAux(std::wstring s1, std::wstring s2, int k) const;
 	const word_pos &count_relations(int n, const std::list<related_words> &relations) const;

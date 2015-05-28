@@ -87,14 +87,16 @@ double SameWord::get_homogeneity_index(const list<word_pos> &words, const list<r
 	return (1.0 - 1.0/(double)words.size());
 }
 
-Hypernymy::Hypernymy(int k, const wstring &semfile, wostream &sout) : relation(L"Hypernymy", L"^(VB|NN)") {
+Hypernymy::Hypernymy(int k, double alpha, const wstring &semfile, wostream &sout) : relation(L"Hypernymy", L"^(VB|NN)") {
 	if (semdb==NULL) semdb = new semanticDB(semfile);
 	depth = k;
+	this->alpha = alpha;
 	this->sout = &sout;
 }
 
 semanticDB * Hypernymy::semdb = NULL;
 int Hypernymy::depth = 0;
+double Hypernymy::alpha = 0.9;
 
 const word_pos &Hypernymy::count_relations(int n, const list<related_words> &relations) const {
 	unordered_map<wstring, int> wp_count;
@@ -147,7 +149,6 @@ double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<
 	}
 
 	double res = 0;
-	double alpha = 0.9;
 	for (int i = 0; i < depth + 1; i++) {
 		res += alpha * ((double)num_words_dist[i] / n);
 		alpha *= 0.9;
@@ -182,7 +183,7 @@ bool Hypernymy::compute_word (const word &w, const sentence &s, const document &
 
 		for (list<word_pos>::const_iterator it_w = words.begin(); it_w != words.end(); it_w++) {
 			const word &w2 = it_w->w;
-			if (w.get_form() != w2.get_form() && (n_sentence - it_w->n_sentence) <= max_distance) {
+			if ((n_sentence - it_w->n_sentence) <= max_distance) {
 				const list<pair<wstring,double>> & ss1 = w.get_senses();
 				const list<pair<wstring,double>> & ss2 = w2.get_senses();
 				if (ss1.empty() || ss2.empty()) return FALSE;

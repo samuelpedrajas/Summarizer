@@ -9,6 +9,6 @@ MaxDistanceBetweenWords 20
 
 <Relations>
 SameWord
-Hypernymy 3
+Hypernymy 3 0.9
 SameCoreferenceGroup
 </Relations>

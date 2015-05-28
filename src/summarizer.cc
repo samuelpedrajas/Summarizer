@@ -7,6 +7,7 @@ summarizer::summarizer(const wstring &datFile) {
 
 	// Default configuration
 	hypernymy_depth = 2;
+	alpha = 0.9;
     remove_used_lexical_chains = FALSE;
     only_strong = FALSE;
     num_words = 50;
@@ -54,9 +55,10 @@ summarizer::summarizer(const wstring &datFile) {
         wstring elem;
         sin >> elem;
         if (elem == L"Hypernymy") {
-        	wstring value;
-        	sin >> value;
-        	hypernymy_depth = stoi(value);
+        	wstring value1, value2;
+        	sin >> value1 >> value2;
+        	hypernymy_depth = stoi(value1);
+        	alpha = stof(value2);
         }
         used_tags.insert(elem);
       	break;
@@ -218,7 +220,7 @@ relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const {
 	if(ws == L"SameWord") { 
 		rel = new SameWord(sout);
 	} else if (ws == L"Hypernymy") {
-		rel = new Hypernymy(hypernymy_depth, semdb_path, sout);
+		rel = new Hypernymy(hypernymy_depth, alpha, semdb_path, sout);
 	} else if (ws == L"SameCoreferenceGroup") {
 		rel = new SameCorefGroup(sout);
 	}

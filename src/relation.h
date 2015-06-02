@@ -48,6 +48,9 @@ public:
 	virtual double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
 		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) = 0;
 
+	virtual std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const = 0;
+
+
 protected:
 
 	const freeling::regexp compatible_tag;
@@ -66,6 +69,9 @@ public:
 	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
 		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
 		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
+
+	std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring,
+		std::pair<int, word_pos*> > &unique_words) const;
 };
 
 class Hypernymy : public relation {
@@ -80,6 +86,9 @@ public:
 	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
 		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
 		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
+
+	std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring,
+		std::pair<int, word_pos*> > &unique_words) const;
 
 private:
 
@@ -103,5 +112,8 @@ public:
 	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
 		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
 		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
+
+	std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring,
+		std::pair<int, word_pos*> > &unique_words) const;
 };
 

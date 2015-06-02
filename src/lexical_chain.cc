@@ -5,9 +5,9 @@ using namespace std;
 
 lexical_chain::lexical_chain(relation * r, const word &w, const sentence &s, int n_paragraph, int n_sentence, int position) {
 	rel = r;
-	word_pos wp(w, s, n_paragraph, n_sentence, position);
-	words.push_back(wp);
-	unique_words[w.get_form()] = make_pair<int, word_pos*>(1, &wp);
+	word_pos * wp = new word_pos(w, s, n_paragraph, n_sentence, position);
+	words.push_back(*wp);
+	unique_words[w.get_form()] = pair<int, word_pos*>(1, wp);
 	score = -1;
 }
 
@@ -22,6 +22,10 @@ double lexical_chain::get_score() {
 
 const list<word_pos> &lexical_chain::get_words() const {
 	return words;
+}
+
+list<word_pos> lexical_chain::get_ordered_words() const {
+	return rel->order_words_by_weight(this->unique_words);
 }
 
 int lexical_chain::get_number_of_words() const {

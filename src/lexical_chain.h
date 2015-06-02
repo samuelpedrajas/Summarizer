@@ -15,6 +15,8 @@ public:
 
     const std::list<word_pos> &get_words() const;
 
+    std::list<word_pos> get_ordered_words() const;
+
     std::wstring toString();
 private:
 

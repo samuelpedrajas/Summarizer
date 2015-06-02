@@ -59,7 +59,7 @@ bool SameWord::compute_word (const word &w, const sentence &s, const document &d
 			words.push_back(*wp);
 			wstring form = w.get_form();
 			unordered_map<wstring, pair<int, word_pos*> >::iterator it_uw = unique_words.find(form);
-			if (it_uw == unique_words.end()) unique_words[form] = make_pair<int, word_pos*>(1, &*wp);
+			if (it_uw == unique_words.end()) unique_words[form] = pair<int, word_pos*>(1, wp);
 			else (it_uw->second).first++;
 			return TRUE;
 		}
@@ -70,6 +70,18 @@ bool SameWord::compute_word (const word &w, const sentence &s, const document &d
 double SameWord::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
 									   const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
 	return (1.0 - 1.0/(double)words.size());
+}
+
+list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+	list<word_pos> res;
+	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
+			it != unique_words.end(); it++) {
+		*sout << L"first : " << it->first << L"  " << it->second.first << endl;
+		*sout << L"second : " << it->second.second->w.get_form() << endl;
+		res.push_back(*(it->second).second);
+	}
+	*sout << L"WO? " << res.begin()->w.get_form() << endl;
+	return res;
 }
 
 Hypernymy::Hypernymy(int k, const wstring &semfile, wostream &sout) : relation(L"Hypernymy", L"^(VB|NN)") {
@@ -142,6 +154,25 @@ double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<
 	return res;
 }
 
+bool order_by_score (const pair<int, word_pos*> &p1, const pair<int, word_pos*> &p2)
+{
+  return (p1.first >= p2.first);
+}
+
+list<word_pos> Hypernymy::order_words_by_weight(const unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+	list<pair<int, word_pos*> > lst_to_order;
+	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
+			it != unique_words.end(); it++) {
+		lst_to_order.push_back(it->second);
+	} 
+	lst_to_order.sort(order_by_score);
+	list<word_pos> res;
+	for (list<pair<int, word_pos*> >::const_iterator it = lst_to_order.begin(); it != lst_to_order.end(); it++) {
+		res.push_back(*it->second);
+	}
+	return res;
+}
+
 int Hypernymy::hypernymyAux(wstring s1, wstring s2, int k) const {
 	if (s1 == s2) {
 		return k;
@@ -189,7 +220,7 @@ bool Hypernymy::compute_word (const word &w, const sentence &s, const document &
 			words.push_back(*wp);
 			wstring form = w.get_form();
 			unordered_map<wstring, pair<int, word_pos*> >::iterator it_uw = unique_words.find(form);
-			if (it_uw == unique_words.end()) unique_words[form] = make_pair<int, word_pos*>(1, &*wp);
+			if (it_uw == unique_words.end()) unique_words[form] = pair<int, word_pos*>(1, wp);
 			else (it_uw->second).first++;
 		}
 	}
@@ -222,6 +253,20 @@ double SameCorefGroup::get_homogeneity_index(const list<word_pos> &words, const 
 	return (1.0 - (double) (hi/words.size()));
 }
 
+list<word_pos> SameCorefGroup::order_words_by_weight(const unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+	list<pair<int, word_pos*> > lst_to_order;
+	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
+			it != unique_words.end(); it++) {
+		lst_to_order.push_back(it->second);
+	} 
+	lst_to_order.sort(order_by_score);
+	list<word_pos> res;
+	for (list<pair<int, word_pos*> >::const_iterator it = lst_to_order.begin(); it != lst_to_order.end(); it++) {
+		res.push_back(*it->second);
+	}
+	return res;
+}
+
 bool SameCorefGroup::compute_word (const word &w, const sentence &s, const document &doc,
 								   int n_paragraph, int n_sentence, int position, list<word_pos> &words,
 								   list<related_words> &relations, unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
@@ -251,7 +296,7 @@ bool SameCorefGroup::compute_word (const word &w, const sentence &s, const docum
 					words.push_back(*wp);
 					wstring form = w.get_form();
 					unordered_map<wstring, pair<int, word_pos*> >::iterator it_uw = unique_words.find(form);
-					if (it_uw == unique_words.end()) unique_words[form] = make_pair<int, word_pos*>(1, &*wp);
+					if (it_uw == unique_words.end()) unique_words[form] = pair<int, word_pos*>(1, wp);
 					else (it_uw->second).first++;
 
 					return TRUE;

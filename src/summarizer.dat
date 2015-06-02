@@ -6,7 +6,5 @@ SemDBPath /usr/local/share/freeling/en/semdb.dat
 </General>
 
 <Relations>
-SW
 HN 3
-SCG
 </Relations>

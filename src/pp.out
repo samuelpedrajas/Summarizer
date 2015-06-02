@@ -1,0 +1,27 @@
+1 This this DT  DT  pos=determiner                   - -          (DT:1        2 SBJ  -  -                           A0 A1
+2 is   be   VBZ VBZ pos=verb|vform=personal|person=3 - 02604760-v (vb-be:2)    0 ROOT -  be.00                       -  -
+3 a    1    Z   Z   pos=number                       - -          (sn-chunk:4  2 VC   (0 -                           -  -
+4 test test NN  NN  pos=noun|type=common|num=s       - 07197021-n (n-chunk:4)) 2 PRD  0) quiz.01|examine.01|probe.01 A1 -
+5 .    .    Fp  Fp  pos=punctuation|type=period      - -          (st-brk:5))  4 DEP  -  -                           -  -
+
+1 Does do   VBZ VBZ pos=verb|vform=personal|person=3                     - 01712704-v (claus:1      5 DEP  -  do.00                       -  - -
+2 this this DT  DT  pos=determiner                                       - -          (sn-chunk:4   4 NMOD (1 -                           -  - -
+3 test test NN  NN  pos=noun|type=common|num=s                           - 07197021-n (n-chunk:4    4 NMOD -  quiz.01|examine.01|probe.01 -  - A1
+4 work work NN  NN  pos=noun|type=common|num=s                           - 00575741-n (n-chunk:4))) 1 VC   1) work.01                     A1 - -
+5 ?    ?    Fit Fit pos=punctuation|type=questionmark|punctenclose=close - -          (in-brk:5))   0 ROOT -  -                           -  - -
+
+1 Yes     yes  RB  RB  pos=adverb|type=general          - -          (claus:4(adv:1   7 PRD  -   -                           -  - -
+2 ,       ,    Fc  Fc  pos=punctuation|type=comma       - -          (sf-brk:2))      7 PRD  -   -                           -  - -
+3 I       i    PRP PRP pos=pronoun|type=personal        - -          (sn-chunk:3)     7 SBJ  (2) -                           A0 - A0
+4 hope    hope VBP VBP pos=verb|vform=personal          - 01811441-v -                3 VC   -   hope.00                     -  - -
+5 this    this DT  DT  pos=determiner                   - -          (sv:8(sn-chunk:6 6 NMOD (0  -                           -  - -
+6 test    test NN  NN  pos=noun|type=common|num=s       - 07197021-n (n-chunk:6))     7 SBJ  0)  quiz.01|examine.01|probe.01 -  - A0
+7 is      be   VBZ VBZ pos=verb|vform=personal|person=3 - 02604760-v (vb-be:7)        0 ROOT -   -                           -  - -
+8 working work VBG VBG pos=verb|vform=gerund            - 01525666-v (vb-chunk:8))    7 VC   -   operate.01                  -  - -
+9 .       .    Fp  Fp  pos=punctuation|type=period      - -          (st-brk:9))      8 PMOD -   -                           -  - -
+
+1 Including   include     VBG VBG pos=verb|vform=gerund       - 00684838-v (claus:1     4 DEP  -  include.00 -
+2 the         the         DT  DT  pos=determiner              - -          (sn-chunk:3  3 NMOD (4 -          -
+3 pharagraphs pharagraphs NNS NNS pos=noun|type=common|num=p  - -          (n-chunk:3)) 1 PMOD 4) -          A1
+4 .           .           Fp  Fp  pos=punctuation|type=period - -          (st-brk:4))  0 ROOT -  -          -
+

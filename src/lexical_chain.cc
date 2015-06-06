@@ -7,7 +7,7 @@ lexical_chain::lexical_chain(relation * r, const word &w, const sentence &s, int
 	rel = r;
 	word_pos * wp = new word_pos(w, s, n_paragraph, n_sentence, position);
 	words.push_back(*wp);
-	unique_words[w.get_form()] = pair<int, word_pos*>(1, wp);
+	unique_words[w.get_lc_form()] = pair<int, word_pos*>(1, wp);
 	score = -1;
 }
 

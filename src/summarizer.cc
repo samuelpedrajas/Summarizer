@@ -288,7 +288,7 @@ list<word_pos> summarizer::summarize(wostream &sout, const document &doc) {
 	// print chains
 	print_lexical_chains(chains, sout);
 
-	list<word_pos> res = first_word(sout, chains);
+	list<word_pos> res = first_most_weighted_word(sout, chains);
 	res.sort(compare_word_pos);
 	return(res);
 }

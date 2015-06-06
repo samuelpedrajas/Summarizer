@@ -34,7 +34,7 @@ summarizer::summarizer(const wstring &datFile) {
         wstring key, value;
         sin >> key >> value; 
         if (key == L"RemoveUsedChains") {
-        	remove_used_lexical_chains = (value == L"true");
+        	remove_used_lexical_chains = (value == L"true" or value[0]==L'y' or value[0]==L'Y' or value==L"1");
         } else if (key == L"OnlyStrong") {
         	only_strong = (value == L"true" or value[0]==L'y' or value[0]==L'Y' or value==L"1");
         } else if (key == L"NumWords") {
@@ -128,13 +128,10 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 	int acc_n_words = 0;
 	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
 		const list<word_pos> &wps = it->get_words();
-		list<word_pos>::const_iterator end_wps = wps.end();
-		if (remove_used_lexical_chains) {
-			end_wps = wps.begin();
-			end_wps++;
-		}
 
-		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != end_wps && acc_n_words < num_words; it_wp++) {
+		bool brk = false;
+		for(list<word_pos>::const_iterator it_wp = wps.begin(); it_wp != wps.end() &&
+				acc_n_words < num_words && !brk; it_wp++) {
 			const word_pos wp = *it_wp;
 			sout << L"WORRDD: " << wp.w.get_form() << endl;
 
@@ -150,6 +147,7 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 					sent_set.insert(&s);
 					acc_n_words += s_size;
 					wp_list.push_back(wp);
+					if (remove_used_lexical_chains) brk = true;
 				}
 			}
 		}
@@ -172,9 +170,9 @@ list<word_pos> summarizer::sum_of_chain_weights(wostream &sout, map<wstring, lis
 
 	// Here we score the sentences that have at least one word in a lexical chain
 	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
-		const list<word_pos> * wps = it->get_words();
+		const list<word_pos> &wps = it->get_words();
 
-		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != wps->end(); it_wp++) {
+		for(list<word_pos>::const_iterator it_wp = wps.begin(); it_wp != wps.end(); it_wp++) {
 			unordered_map<int, pair<int, const word_pos*> >::iterator it_ss = sentence_scores.find(it_wp->n_sentence);
 			if (it_ss != sentence_scores.end()) {
 				(it_ss->second).first++;
@@ -223,12 +221,9 @@ list<word_pos> summarizer::first_most_weighted_word(wostream &sout, map<wstring,
 	int acc_n_words = 0;
 	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
 		list<word_pos> wps = it->get_ordered_words();
-		list<word_pos>::const_iterator end_wps = wps.end();
-		if (remove_used_lexical_chains) {
-			end_wps = wps.begin();
-			end_wps++;
-		}
-		for(list<word_pos>::const_iterator it_wp = wps.begin(); it_wp != end_wps; it_wp++) {
+
+		bool brk = false;
+		for(list<word_pos>::const_iterator it_wp = wps.begin(); it_wp != wps.end() && acc_n_words < num_words && !brk; it_wp++) {
 			const word_pos wp = *it_wp;
 			sout << L"WORRDD: " << wp.w.get_form() << endl;
 			const sentence & s = wp.s;
@@ -243,6 +238,7 @@ list<word_pos> summarizer::first_most_weighted_word(wostream &sout, map<wstring,
 					sent_set.insert(&s);
 					acc_n_words += s_size;
 					wp_list.push_back(wp);
+					if (remove_used_lexical_chains) brk = true;
 				}
 			}
 		}
@@ -280,8 +276,10 @@ map<wstring, list<lexical_chain>> summarizer::build_lexical_chains(wostream &sou
 					}
 
 					if (!inserted) {
-						lexical_chain new_lc(rel, (*it_w), (*it_s), i, j, k);
-						lc.push_back(new_lc);
+						if (rel->is_compatible(*it_w)) {
+							lexical_chain new_lc(rel, (*it_w), (*it_s), i, j, k);
+							lc.push_back(new_lc);
+						}
 					}
 					k++;
 				}

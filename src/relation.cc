@@ -102,7 +102,7 @@ list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring, pair
 	return res;
 }
 
-Hypernymy::Hypernymy(int k, double alpha, const wstring &semfile, wostream &sout) : relation(L"Hypernymy", L"^(VB|NN)") {
+Hypernymy::Hypernymy(int k, double alpha, const wstring &semfile, wostream &sout) : relation(L"Hypernymy", L"^(VB|NN|NP)") {
 	if (semdb==NULL) semdb = new semanticDB(semfile);
 	depth = k;
 	this->alpha = alpha;

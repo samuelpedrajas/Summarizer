@@ -13,13 +13,15 @@ public:
 
     int get_number_of_words() const;
 
-    const std::list<word_pos> * get_words() const;
+    const std::list<word_pos> &get_words() const;
+
+    std::list<word_pos> get_ordered_words() const;
 
     std::wstring toString();
 private:
 
 	double score;
-	std::set<std::wstring> unique_words;
+	std::unordered_map<std::wstring, std::pair<int, word_pos*> > unique_words;
 	std::list<word_pos> words;
 	relation * rel;
 	std::list<related_words> relations; 

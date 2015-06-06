@@ -127,15 +127,16 @@ list<word_pos> summarizer::first_word(wostream &sout, map<wstring, list<lexical_
 	list<word_pos> wp_list;
 	int acc_n_words = 0;
 	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
-		const list<word_pos> * wps = it->get_words();
-		list<word_pos>::const_iterator end_wps = wps->end();
+		const list<word_pos> &wps = it->get_words();
+		list<word_pos>::const_iterator end_wps = wps.end();
 		if (remove_used_lexical_chains) {
-			end_wps = wps->begin();
+			end_wps = wps.begin();
 			end_wps++;
 		}
-		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != end_wps && acc_n_words < num_words; it_wp++) {
 
+		for(list<word_pos>::const_iterator it_wp = wps->begin(); it_wp != end_wps && acc_n_words < num_words; it_wp++) {
 			const word_pos wp = *it_wp;
+			sout << L"WORRDD: " << wp.w.get_form() << endl;
 
 			const sentence & s = wp.s;
 			if (sent_set.find(&s) == sent_set.end()) {
@@ -211,7 +212,41 @@ list<word_pos> summarizer::sum_of_chain_weights(wostream &sout, map<wstring, lis
 			wp_list.push_back(*wp);
 		}
 	}
+	return wp_list;
+}
 
+list<word_pos> summarizer::first_most_weighted_word(wostream &sout, map<wstring, list<lexical_chain> > &chains) const {
+	list<lexical_chain> lexical_chains = map_to_lists(chains);
+	lexical_chains.sort(compare_lexical_chains);
+	set<const sentence*> sent_set;
+	list<word_pos> wp_list;
+	int acc_n_words = 0;
+	for (list<lexical_chain>::const_iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++) {
+		list<word_pos> wps = it->get_ordered_words();
+		list<word_pos>::const_iterator end_wps = wps.end();
+		if (remove_used_lexical_chains) {
+			end_wps = wps.begin();
+			end_wps++;
+		}
+		for(list<word_pos>::const_iterator it_wp = wps.begin(); it_wp != end_wps; it_wp++) {
+			const word_pos wp = *it_wp;
+			sout << L"WORRDD: " << wp.w.get_form() << endl;
+			const sentence & s = wp.s;
+			if (sent_set.find(&s) == sent_set.end()) {
+				// Counting the number of words (here we exclude commas, points, exclamation symbols, etc...)
+				int s_size = 0;
+				for (sentence::const_iterator it_s = s.words_begin(); it_s != s.words_end(); it_s++)
+					if (it_s->get_tag()[0] != L'F') s_size++;
+
+				sout << L"NUM words: " << s_size << endl;
+				if (s_size + acc_n_words <= num_words) {
+					sent_set.insert(&s);
+					acc_n_words += s_size;
+					wp_list.push_back(wp);
+				}
+			}
+		}
+	}
 	return wp_list;
 }
 
@@ -317,7 +352,7 @@ list<word_pos> summarizer::summarize(wostream &sout, const document &doc) {
 
 	list<word_pos> res;
 	if (heuristic == L"FirstMostWeightedWord") {
-
+		res = first_most_weighted_word(sout, chains);
 	} else if (heuristic == L"SumOfChainWeights") {
 		res = sum_of_chain_weights(sout, chains);
 	} else {
@@ -325,5 +360,6 @@ list<word_pos> summarizer::summarize(wostream &sout, const document &doc) {
 	}
 
 	res.sort();
+
 	return(res);
 }

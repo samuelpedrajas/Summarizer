@@ -3,26 +3,28 @@
 class lexical_chain {
 public:
 
-	lexical_chain(relation * r, const freeling::word &w, const freeling::sentence &s, int n_paragraph, int n_sentence, int position);
+	lexical_chain(relation * r, const freeling::word &w, const freeling::sentence &s,
+	              int n_paragraph, int n_sentence, int position);
 
 	~lexical_chain();
 
-    bool compute_word(const freeling::word &w, const freeling::sentence &s, const freeling::document &doc, int n_paragraph, int n_sentence, int position, std::wostream &sout);
+	bool compute_word(const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
+	                  int n_paragraph, int n_sentence, int position, std::wostream &sout);
 
-    double get_score();
+	double get_score();
 
-    int get_number_of_words() const;
+	int get_number_of_words() const;
 
-    const std::list<word_pos> &get_words() const;
+	const std::list<word_pos> &get_words() const;
 
-    std::list<word_pos> get_ordered_words() const;
+	std::list<word_pos> get_ordered_words() const;
 
-    std::wstring toString();
+	std::wstring toString();
 private:
 
 	double score;
 	std::unordered_map<std::wstring, std::pair<int, word_pos*> > unique_words;
 	std::list<word_pos> words;
 	relation * rel;
-	std::list<related_words> relations; 
+	std::list<related_words> relations;
 };

@@ -3,37 +3,41 @@
 using namespace freeling;
 using namespace std;
 
-word_pos::word_pos(const word &w_p, const sentence &s_p, int n_paragraph, int n_sentence, int position) : w(w_p), s(s_p) {
+word_pos::word_pos(const word &w_p, const sentence &s_p, int n_paragraph,
+                   int n_sentence, int position) : w(w_p), s(s_p) {
 	this->n_paragraph = n_paragraph;
 	this->n_sentence = n_sentence;
 	this->position = position;
 }
 
 bool word_pos::operator==(word_pos other) const {
-    return n_paragraph == other.n_paragraph && n_sentence == other.n_sentence && position == other.position;
+	return n_paragraph == other.n_paragraph && n_sentence == other.n_sentence && position == other.position;
 }
 
 bool word_pos::operator<(word_pos other) const {
 	if (n_sentence < other.n_sentence) return true;
-    return n_sentence == other.n_sentence && position < other.position;
+	return n_sentence == other.n_sentence && position < other.position;
 }
 
 bool word_pos::operator>(word_pos other) const {
 	if (n_sentence > other.n_sentence) return true;
-    return n_sentence == other.n_sentence && position > other.position;
+	return n_sentence == other.n_sentence && position > other.position;
 }
 
 wstring word_pos::toString() const {
-	wstring res = w.get_form() + L" [Paragraph " + to_wstring(n_paragraph) + L", Sentence " + to_wstring(n_sentence) + L", Position " + to_wstring(position) + L"]";
+	wstring res = w.get_form() + L" [Paragraph " + to_wstring(n_paragraph) + L", Sentence " +
+	              to_wstring(n_sentence) + L", Position " + to_wstring(position) + L"]";
 	return res;
 }
 
-related_words::related_words(const word_pos &w_p1, const word_pos &w_p2, double relatedness) : w1(w_p1), w2(w_p2) {
+related_words::related_words(const word_pos &w_p1, const word_pos &w_p2,
+                             double relatedness) : w1(w_p1), w2(w_p2) {
 	this->relatedness = relatedness;
 }
 
 wstring related_words::toString() const {
-	wstring res = w1.toString() + L" <-> " + w2.toString() + L" (Relatedness = " + to_wstring(relatedness) + L")";
+	wstring res = w1.toString() + L" <-> " + w2.toString() +
+	              L" (Relatedness = " + to_wstring(relatedness) + L")";
 	return res;
 }
 
@@ -48,8 +52,9 @@ bool relation::is_compatible(const word &w) const {
 }
 
 bool relation::compute_word (const word &w, const sentence &s, const document &doc,
-	int n_paragraph, int n_sentence, int position, list<word_pos> &words,
-	list<related_words> &relations, unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+                             int n_paragraph, int n_sentence, int position, list<word_pos> &words,
+                             list<related_words> &relations, unordered_map<wstring,
+                             pair<int, word_pos*> > &unique_words) const {
 
 }
 
@@ -58,14 +63,16 @@ SameWord::SameWord(wostream &sout) : relation(L"Same Word", L"^(NP|VB|NN)") {
 }
 
 bool SameWord::compute_word (const word &w, const sentence &s, const document &doc,
-							 int n_paragraph, int n_sentence, int position, list<word_pos> &words,
-list<related_words> &relations, unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+                             int n_paragraph, int n_sentence, int position, list<word_pos> &words,
+                             list<related_words> &relations, unordered_map<wstring,
+                             pair<int, word_pos*> > &unique_words) const {
 	bool found = false;
 	word_pos * wp;
 
 	if (words.size() > 0 && is_compatible(w)) {
 		for (list<word_pos>::const_iterator it_w = words.begin(); it_w != words.end(); it_w++) {
-			if (words.begin()->w.get_lc_form() == w.get_lc_form() && (n_sentence - it_w->n_sentence) <= max_distance) {
+			if (words.begin()->w.get_lc_form() == w.get_lc_form() &&
+			        (n_sentence - it_w->n_sentence) <= max_distance) {
 				if (!found) {
 					wp = new word_pos(w, s, n_paragraph, n_sentence, position);
 					found = true;
@@ -80,20 +87,22 @@ list<related_words> &relations, unordered_map<wstring, pair<int, word_pos*> > &u
 		wstring form = w.get_lc_form();
 		unordered_map<wstring, pair<int, word_pos*> >::iterator it_uw = unique_words.find(form);
 		if (it_uw == unique_words.end()) unique_words[form] = pair<int, word_pos*>(1, wp);
-		else (it_uw->second).first++;	}
+		else (it_uw->second).first++;
+	}
 	return found;
 }
 
 double SameWord::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
-									   const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
-	return (1.0 - 1.0/(double)words.size());
+                                       const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
+	return (1.0 - 1.0 / (double)words.size());
 }
 
 
-list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring,
+        pair<int, word_pos*> > &unique_words) const {
 	list<word_pos> res;
 	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
-			it != unique_words.end(); it++) {
+	        it != unique_words.end(); it++) {
 		*sout << L"first : " << it->first << L"  " << it->second.first << endl;
 		*sout << L"second : " << it->second.second->w.get_form() << endl;
 		res.push_back(*(it->second).second);
@@ -102,8 +111,9 @@ list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring, pair
 	return res;
 }
 
-Hypernymy::Hypernymy(int k, double alpha, const wstring &semfile, wostream &sout) : relation(L"Hypernymy", L"^(VB|NN|NP)") {
-	if (semdb==NULL) semdb = new semanticDB(semfile);
+Hypernymy::Hypernymy(int k, double alpha, const wstring &semfile,
+                     wostream &sout) : relation(L"Hypernymy", L"^(VB|NN|NP)") {
+	if (semdb == NULL) semdb = new semanticDB(semfile);
 	depth = k;
 	this->alpha = alpha;
 	this->sout = &sout;
@@ -118,8 +128,10 @@ const word_pos &Hypernymy::count_relations(int n, const list<related_words> &rel
 	const word_pos * max_wp;
 	int max_freq = 0;
 	for (list<related_words>::const_iterator it = relations.begin(); it != relations.end(); it++) {
-		wstring key_1 = to_wstring(it->w1.n_paragraph) + L":" + to_wstring(it->w1.n_sentence) + L":" + to_wstring(it->w1.position);
-		wstring key_2 = to_wstring(it->w2.n_paragraph) + L":" + to_wstring(it->w2.n_sentence) + L":" + to_wstring(it->w2.position);
+		wstring key_1 = to_wstring(it->w1.n_paragraph) + L":" + to_wstring(it->w1.n_sentence) +
+		                L":" + to_wstring(it->w1.position);
+		wstring key_2 = to_wstring(it->w2.n_paragraph) + L":" + to_wstring(it->w2.n_sentence) +
+		                L":" + to_wstring(it->w2.position);
 		int freq1;
 		int freq2;
 
@@ -151,11 +163,11 @@ const word_pos &Hypernymy::count_relations(int n, const list<related_words> &rel
 }
 
 double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
-										const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
+                                        const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
 	int n = words.size();
 	const word_pos &wp_core = count_relations(n, relations);
 
-	vector<int> num_words_dist(depth+1, 0);
+	vector<int> num_words_dist(depth + 1, 0);
 	num_words_dist[0] = 1;
 	for (list<related_words>::const_iterator it = relations.begin(); it != relations.end(); it++) {
 		if (it->w1 == wp_core || it->w2 == wp_core) {
@@ -175,18 +187,20 @@ double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<
 
 bool order_by_score (const pair<int, word_pos*> &p1, const pair<int, word_pos*> &p2)
 {
-  return (p1.first >= p2.first);
+	return (p1.first >= p2.first);
 }
 
-list<word_pos> Hypernymy::order_words_by_weight(const unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+list<word_pos> Hypernymy::order_words_by_weight(const unordered_map<wstring,
+        pair<int, word_pos*> > &unique_words) const {
 	list<pair<int, word_pos*> > lst_to_order;
 	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
-			it != unique_words.end(); it++) {
+	        it != unique_words.end(); it++) {
 		lst_to_order.push_back(it->second);
-	} 
+	}
 	lst_to_order.sort(order_by_score);
 	list<word_pos> res;
-	for (list<pair<int, word_pos*> >::const_iterator it = lst_to_order.begin(); it != lst_to_order.end(); it++) {
+	for (list<pair<int, word_pos*> >::const_iterator it = lst_to_order.begin();
+	        it != lst_to_order.end(); it++) {
 		res.push_back(*it->second);
 	}
 	return res;
@@ -208,8 +222,9 @@ int Hypernymy::hypernymyAux(wstring s1, wstring s2, int k) const {
 }
 
 bool Hypernymy::compute_word (const word &w, const sentence &s, const document &doc,
-							  int n_paragraph, int n_sentence, int position, list<word_pos> &words,
-							  list<related_words> &relations, unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+                              int n_paragraph, int n_sentence, int position, list<word_pos> &words,
+                              list<related_words> &relations,
+                              unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
 
 	bool inserted = FALSE;
 	if (is_compatible(w)) {
@@ -219,8 +234,8 @@ bool Hypernymy::compute_word (const word &w, const sentence &s, const document &
 			const word &w2 = it_w->w;
 
 			if ((n_sentence - it_w->n_sentence) <= max_distance) {
-				const list<pair<wstring,double>> & ss1 = w.get_senses();
-				const list<pair<wstring,double>> & ss2 = w2.get_senses();
+				const list<pair<wstring, double>> & ss1 = w.get_senses();
+				const list<pair<wstring, double>> & ss2 = w2.get_senses();
 				if (ss1.empty() || ss2.empty()) return FALSE;
 				wstring s1 = ss1.begin()->first;
 				wstring s2 = ss2.begin()->first;
@@ -236,7 +251,7 @@ bool Hypernymy::compute_word (const word &w, const sentence &s, const document &
 				}
 			}
 		}
-		if (inserted) {	
+		if (inserted) {
 			words.push_back(*wp);
 			wstring form = w.get_lc_form();
 			unordered_map<wstring, pair<int, word_pos*> >::iterator it_uw = unique_words.find(form);
@@ -252,7 +267,7 @@ SameCorefGroup::SameCorefGroup(wostream &sout) : relation(L"Same Coreference Gro
 }
 
 double SameCorefGroup::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
-											 const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
+        const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
 	double hi = 0;
 	bool prp_found = false;
 	bool np_found = false;
@@ -270,7 +285,7 @@ double SameCorefGroup::get_homogeneity_index(const list<word_pos> &words, const 
 			hi++;
 		}
 	}
-	return (1.0 - (double) (hi/words.size()));
+	return (1.0 - (double) (hi / words.size()));
 }
 
 bool order_by_tag_and_score (const pair<int, word_pos*> &p1, const pair<int, word_pos*> &p2)
@@ -288,15 +303,17 @@ bool order_by_tag_and_score (const pair<int, word_pos*> &p1, const pair<int, wor
 	return (p1.first >= p2.first);
 }
 
-list<word_pos> SameCorefGroup::order_words_by_weight(const unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+list<word_pos> SameCorefGroup::order_words_by_weight(const unordered_map<wstring,
+        pair<int, word_pos*> > &unique_words) const {
 	list<pair<int, word_pos*> > lst_to_order;
 	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
-			it != unique_words.end(); it++) {
+	        it != unique_words.end(); it++) {
 		lst_to_order.push_back(it->second);
-	} 
+	}
 	lst_to_order.sort(order_by_tag_and_score);
 	list<word_pos> res;
-	for (list<pair<int, word_pos*> >::const_iterator it = lst_to_order.begin(); it != lst_to_order.end(); it++) {
+	for (list<pair<int, word_pos*> >::const_iterator it = lst_to_order.begin();
+	        it != lst_to_order.end(); it++) {
 		res.push_back(*it->second);
 		*sout << it->second->w.get_form() << L" ";
 	}
@@ -305,25 +322,27 @@ list<word_pos> SameCorefGroup::order_words_by_weight(const unordered_map<wstring
 }
 
 bool SameCorefGroup::compute_word (const word &w, const sentence &s, const document &doc,
-								   int n_paragraph, int n_sentence, int position, list<word_pos> &words,
-								   list<related_words> &relations, unordered_map<wstring, pair<int, word_pos*> > &unique_words) const {
+                                   int n_paragraph, int n_sentence, int position, list<word_pos> &words,
+                                   list<related_words> &relations, unordered_map<wstring,
+                                   pair<int, word_pos*> > &unique_words) const {
 
 	if (words.size() > 0 && is_compatible(w)) {
 		const word_pos &wp2 = *(words.begin());
 		int group_w1 = -1;
 		int group_w2 = -1;
 		const list<int> &grps = doc.get_groups();
-		for(list<int>::const_iterator it = grps.begin(); it != grps.end(); it++) {
+		for (list<int>::const_iterator it = grps.begin(); it != grps.end(); it++) {
 			list<int> coref_id_mentions = doc.get_coref_id_mentions(*it);
 			bool ffound = FALSE;
 			bool sfound = FALSE;
-			for(list<int>::const_iterator it_cid = coref_id_mentions.begin(); it_cid != coref_id_mentions.end(); it_cid++) {
+			for (list<int>::const_iterator it_cid = coref_id_mentions.begin();
+			        it_cid != coref_id_mentions.end(); it_cid++) {
 				const mention &m = doc.get_mention(*it_cid);
 				int s_mention = m.get_n_sentence();
 				int pos_mention = m.get_head().get_position();
-				if (s_mention == n_sentence && pos_mention == position) ffound = TRUE; // TODO: No comparar las dos posiciones de memoria
+				if (s_mention == n_sentence && pos_mention == position) ffound = TRUE;
 				if (s_mention == wp2.n_sentence && pos_mention == wp2.position) sfound = TRUE;
-				if(ffound && sfound) {
+				if (ffound && sfound) {
 					word_pos * wp;
 					wp = new word_pos(w, s, n_paragraph, n_sentence, position);
 					for (list<word_pos>::const_iterator it_w = words.begin(); it_w != words.end(); it_w++) {

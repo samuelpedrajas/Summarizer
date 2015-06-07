@@ -16,7 +16,7 @@ analyzer::invoke_options fill_invoke();
 
 int main (int argc, char **argv) {
 
-  //// set locale to an UTF8 compatible locale 
+  //// set locale to an UTF8 compatible locale
   util::init_locale(L"default");
 
   /// read FreeLing installation path if given, use default otherwise
@@ -25,7 +25,7 @@ int main (int argc, char **argv) {
   else ipath = util::string2wstring(argv[1]);
 
   /// set config options (which modules to create, with which configuration)
-  analyzer::config_options cfg = fill_config(ipath+L"/share/freeling/");
+  analyzer::config_options cfg = fill_config(ipath + L"/share/freeling/");
   /// create analyzer
   analyzer anlz(cfg);
 
@@ -38,37 +38,38 @@ int main (int argc, char **argv) {
   anlz.set_current_invoke_options(ivk);
 
   /// load document to analyze
-  wstring text;  
+  wstring text;
   wstring line;
-  while (getline(wcin,line))
+  while (getline(wcin, line))
     text = text + line + L"\n";
 
   /// analyze text, leave result in doc
   document doc;
-  anlz.analyze(text,doc,true);
+  anlz.analyze(text, doc, true);
 
   //sens->analyze(doc);
   //dsb->analyze(doc);
 
-  
+
   for (list<paragraph>::const_iterator it_p = doc.begin(); it_p != doc.end(); it_p++) {
     int j = 0;
     for (list<sentence>::const_iterator it_s = it_p->begin(); it_s != it_p->end(); it_s++) {
       int k = 0;
       for (list<word>::const_iterator it_w = it_s->begin(); it_w != it_s->end(); it_w++) {
-        wcout << it_w->get_form() << L" -> " << it_w->get_tag() << endl; 
+        wcout << it_w->get_form() << L" -> " << it_w->get_tag() << endl;
       }
     }
   }
-  
-  
+
+
   summarizer sum(L"/home/samuel/Summarizer/src/summarizer.dat");
   list<word_pos> selected_sentences = sum.summarize(wcout, doc);
 
-  for (list<word_pos>::const_iterator it = selected_sentences.begin(); it != selected_sentences.end(); it++) {
+  for (list<word_pos>::const_iterator it = selected_sentences.begin();
+       it != selected_sentences.end(); it++) {
     const sentence & s = it->s;
-    sentence::const_iterator b_it= s.begin();
-    sentence::const_iterator e_it= --s.end();
+    sentence::const_iterator b_it = s.begin();
+    sentence::const_iterator e_it = --s.end();
     unsigned long span_start = b_it->get_span_start();
     unsigned long span_finish = e_it->get_span_finish();
 
@@ -90,7 +91,7 @@ analyzer::config_options fill_config(const wstring &path) {
 
   /// Language of text to process
   cfg.Lang = L"en";
- 
+
   // path to language specific data
   wstring lpath = path + L"/" + cfg.Lang + L"/";
 
@@ -117,12 +118,12 @@ analyzer::config_options fill_config(const wstring &path) {
   cfg.UKB_ConfigFile = lpath + L"ukb.dat";
   /// Tagger options
   cfg.TAGGER_HMMFile = lpath + L"tagger.dat";
-  cfg.TAGGER_ForceSelect=RETOK;
+  cfg.TAGGER_ForceSelect = RETOK;
   /// Chart parser config file
   cfg.PARSER_GrammarFile = lpath + L"chunker/grammar-chunk.dat";
   /// Dependency parsers config files
-  cfg.DEP_TxalaFile = lpath + L"dep_txala/dependences.dat";   
-  cfg.DEP_TreelerFile = lpath + L"dep_treeler/labeled/dependences.dat";   
+  cfg.DEP_TxalaFile = lpath + L"dep_txala/dependences.dat";
+  cfg.DEP_TreelerFile = lpath + L"dep_treeler/labeled/dependences.dat";
   /// Coreference resolution config file
   cfg.COREF_CorefFile = lpath + L"coref/relaxcor/relaxcor.dat";
 
@@ -140,7 +141,7 @@ analyzer::invoke_options fill_invoke() {
   /// Level of analysis in input and output
   ivk.InputLevel = TEXT;
   ivk.OutputLevel = COREF;
-  
+
   /// activate/deactivate morphological analyzer modules
   ivk.MACO_UserMap = false;
   ivk.MACO_AffixAnalysis = true;
@@ -157,7 +158,7 @@ analyzer::invoke_options fill_invoke() {
 
   ivk.PHON_Phonetics = false;
   ivk.NEC_NEClassification = true;
-  
+
   ivk.SENSE_WSD_which = UKB;
   ivk.TAGGER_which = HMM;
   ivk.DEP_which = TREELER;

@@ -31,27 +31,37 @@ private:
     std::set<std::wstring> used_tags;
     std::wstring heuristic;
 
-    std::map<std::wstring, std::list<lexical_chain>> build_lexical_chains(std::wostream &sout, const freeling::document &doc);
+    std::map<std::wstring, std::list<lexical_chain>> build_lexical_chains(std::wostream &sout,
+            const freeling::document &doc);
 
     void remove_one_word_lexical_chains(std::map<std::wstring, std::list<lexical_chain>> &chains);
 
     void remove_weak_lexical_chains(std::map<std::wstring, std::list<lexical_chain>> &chains);
 
-    void print_lexical_chains(std::map<std::wstring, std::list<lexical_chain>> &chains, std::wostream &sout);
+    void print_lexical_chains(std::map<std::wstring, std::list<lexical_chain>> &chains,
+                              std::wostream &sout);
 
     int count_occurences(const freeling::word &w, const freeling::document &doc) const;
 
-	double average_scores(std::map<std::wstring, std::list<lexical_chain> > &chains_type) const;
+    double average_scores(std::map<std::wstring, std::list<lexical_chain> > &chains_type) const;
 
-	double standard_deviation_scores(std::map<std::wstring, std::list<lexical_chain> > &chains_type, const double avg) const;
+    double standard_deviation_scores(std::map<std::wstring, std::list<lexical_chain> > &chains_type,
+                                     const double avg) const;
 
-	std::list<lexical_chain> map_to_lists(std::map<std::wstring, std::list<lexical_chain> > &chains_type) const;
+    std::list<lexical_chain> map_to_lists(std::map<std::wstring,
+                                          std::list<lexical_chain> > &chains_type) const;
 
-	std::list<word_pos> first_word(std::wostream &sout, std::map<std::wstring, std::list<lexical_chain> > &chains_type) const;
+    void compute_sentence(const std::list<word_pos> &wps, std::list<word_pos> &wp_list,
+                          std::set<const freeling::sentence*> &sent_set, int &acc_n_words) const;
 
-    std::list<word_pos> sum_of_chain_weights(std::wostream &sout, std::map<std::wstring, std::list<lexical_chain> > &chains) const;
+    std::list<word_pos> first_word(std::wostream &sout, std::map<std::wstring,
+                                   std::list<lexical_chain> > &chains_type) const;
 
-    std:: list<word_pos> first_most_weighted_word(std::wostream &sout, std::map<std::wstring, std::list<lexical_chain> > &chains) const;
+    std:: list<word_pos> first_most_weighted_word(std::wostream &sout,
+            std::map<std::wstring, std::list<lexical_chain> > &chains) const;
 
-	relation * tag_to_rel(const std::wstring ws, std::wostream &sout) const;
+    std::list<word_pos> sum_of_chain_weights(std::wostream &sout,
+            std::map<std::wstring, std::list<lexical_chain> > &chains) const;
+
+    relation * tag_to_rel(const std::wstring ws, std::wostream &sout) const;
 };

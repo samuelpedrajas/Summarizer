@@ -15,13 +15,14 @@ struct word_pos {
 	int n_sentence;
 	int position;
 
-	word_pos(const freeling::word &w_p, const freeling::sentence &s_p, int n_paragraph, int n_sentence, int position);
+	word_pos(const freeling::word &w_p, const freeling::sentence &s_p,
+	         int n_paragraph, int n_sentence, int position);
 
-    bool operator==(word_pos other) const;
+	bool operator==(word_pos other) const;
 
-    bool operator<(word_pos other) const;
+	bool operator<(word_pos other) const;
 
-    bool operator>(word_pos other) const;
+	bool operator>(word_pos other) const;
 
 	std::wstring toString() const;
 };
@@ -47,14 +48,19 @@ public:
 
 	bool is_compatible(const freeling::word &w) const;
 
-	virtual bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
-		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const = 0;
+	virtual bool compute_word (const freeling::word &w, const freeling::sentence &s,
+	                           const freeling::document &doc, int n_paragraph,
+	                           int n_sentence, int position, std::list<word_pos> &words,
+	                           std::list<related_words> &relations, std::unordered_map<std::wstring,
+	                           std::pair<int, word_pos*> > &unique_words) const = 0;
 
-	virtual double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) = 0;
+	virtual double get_homogeneity_index(const std::list<word_pos> &words,
+	                                     const std::list<related_words> &relations,
+	                                     const std::unordered_map<std::wstring,
+	                                     std::pair<int, word_pos*> > &unique_words) = 0;
 
-	virtual std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const = 0;
+	virtual std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring,
+	        std::pair<int, word_pos*> > &unique_words) const = 0;
 
 
 protected:
@@ -69,15 +75,19 @@ public:
 
 	SameWord(std::wostream &sout);
 
-	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words);
+	double get_homogeneity_index(const std::list<word_pos> &words,
+	                             const std::list<related_words> &relations,
+	                             const std::unordered_map<std::wstring,
+	                             std::pair<int, word_pos*> > &unique_words);
 
-	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
-		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
+	bool compute_word (const freeling::word &w, const freeling::sentence &s,
+	                   const freeling::document &doc, int n_paragraph,
+	                   int n_sentence, int position, std::list<word_pos> &words,
+	                   std::list<related_words> &relations, std::unordered_map<std::wstring,
+	                   std::pair<int, word_pos*> > &unique_words) const;
 
 	std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring,
-		std::pair<int, word_pos*> > &unique_words) const;
+	        std::pair<int, word_pos*> > &unique_words) const;
 };
 
 class Hypernymy : public relation {
@@ -86,15 +96,18 @@ public:
 
 	Hypernymy(int k, double alpha, const std::wstring &semfile, std::wostream &sout);
 
-	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words);
+	double get_homogeneity_index(const std::list<word_pos> &words,
+	                             const std::list<related_words> &relations,
+	                             const std::unordered_map<std::wstring,
+	                             std::pair<int, word_pos*> > &unique_words);
 
-	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
-		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
+	bool compute_word (const freeling::word &w, const freeling::sentence &s,
+	                   const freeling::document &doc, int n_paragraph, int n_sentence,
+	                   int position, std::list<word_pos> &words, std::list<related_words> &relations,
+	                   std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
 
 	std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring,
-		std::pair<int, word_pos*> > &unique_words) const;
+	        std::pair<int, word_pos*> > &unique_words) const;
 
 private:
 
@@ -113,14 +126,17 @@ public:
 
 	SameCorefGroup(std::wostream &sout);
 
-	double get_homogeneity_index(const std::list<word_pos> &words, const std::list<related_words> &relations,
-		const std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words);
+	double get_homogeneity_index(const std::list<word_pos> &words,
+	                             const std::list<related_words> &relations,
+	                             const std::unordered_map<std::wstring,
+	                             std::pair<int, word_pos*> > &unique_words);
 
-	bool compute_word (const freeling::word &w, const freeling::sentence &s, const freeling::document &doc,
-		int n_paragraph, int n_sentence, int position, std::list<word_pos> &words, std::list<related_words> &relations,
-		std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
+	bool compute_word (const freeling::word &w, const freeling::sentence &s,
+	                   const freeling::document &doc, int n_paragraph, int n_sentence,
+	                   int position, std::list<word_pos> &words, std::list<related_words> &relations,
+	                   std::unordered_map<std::wstring, std::pair<int, word_pos*> > &unique_words) const;
 
 	std::list<word_pos> order_words_by_weight(const std::unordered_map<std::wstring,
-		std::pair<int, word_pos*> > &unique_words) const;
+	        std::pair<int, word_pos*> > &unique_words) const;
 };
 

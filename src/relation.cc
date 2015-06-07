@@ -69,8 +69,11 @@ bool SameWord::compute_word (const word &w, const sentence &s, const document &d
 	bool found = false;
 	word_pos * wp;
 
+
 	if (words.size() > 0 && is_compatible(w)) {
 		for (list<word_pos>::const_iterator it_w = words.begin(); it_w != words.end(); it_w++) {
+			// if the computed word form is equal to any word form from the lexical chain
+			// and their distance in sentences does not exceeds max_distance, then add it
 			if (words.begin()->w.get_lc_form() == w.get_lc_form() &&
 			        (n_sentence - it_w->n_sentence) <= max_distance) {
 				if (!found) {
@@ -82,6 +85,7 @@ bool SameWord::compute_word (const word &w, const sentence &s, const document &d
 			}
 		}
 	}
+
 	if (found) {
 		words.push_back(*wp);
 		wstring form = w.get_lc_form();
@@ -100,6 +104,8 @@ double SameWord::get_homogeneity_index(const list<word_pos> &words, const list<r
 
 list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring,
         pair<int, word_pos*> > &unique_words) const {
+	// In the SameWord relation, we return word_pos ordered by its apparition order, so
+	// we just need to convert it into a list of word_pos
 	list<word_pos> res;
 	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
 	        it != unique_words.end(); it++) {
@@ -165,7 +171,8 @@ const word_pos &Hypernymy::count_relations(int n, const list<related_words> &rel
 double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
                                         const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
 	int n = words.size();
-	const word_pos &wp_core = count_relations(n, relations);
+	const word_pos &wp_core = count_relations(n, relations); // wp_core is the word_pos which appears in
+															 // most relations
 
 	vector<int> num_words_dist(depth + 1, 0);
 	num_words_dist[0] = 1;

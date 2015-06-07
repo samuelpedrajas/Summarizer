@@ -17,6 +17,7 @@ lexical_chain::~lexical_chain() {
 }
 
 double lexical_chain::get_score() {
+	// the score is computed only the first time
 	if (score < 0)
 		score = (double)words.size() * rel->get_homogeneity_index(words, relations, unique_words);
 	return score;
@@ -51,7 +52,7 @@ wstring lexical_chain::toString() {
 
 bool lexical_chain::compute_word(const word &w, const sentence &s, const document &doc,
                                  int n_paragraph, int n_sentence, int position, wostream &sout) {
-	score = -1;
+	score = -1; // score needs to be computed again
 	return rel->compute_word(w, s, doc, n_paragraph, n_sentence, position, this->words,
 	                         this->relations, this->unique_words);
 }

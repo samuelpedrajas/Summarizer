@@ -175,18 +175,21 @@ double Hypernymy::get_homogeneity_index(const list<word_pos> &words, const list<
 															 // most relations
 
 	vector<int> num_words_dist(depth + 1, 0);
-	num_words_dist[0] = 1;
+	// The first position is also initialized to 0 because we want to
+	// give the same homogeinity index than the SameWord relation if
+	// every word is the same.
 	for (list<related_words>::const_iterator it = relations.begin(); it != relations.end(); it++) {
 		if (it->w1 == wp_core || it->w2 == wp_core) {
 			num_words_dist[it->relatedness]++;
 		}
 	}
 
+	// We apply the homogeinity index formula for Hypernymy relation
 	double res = 0;
+	double alpha_aux = 1.0;
 	for (int i = 0; i < depth + 1; i++) {
-		res += alpha * ((double)num_words_dist[i] / n);
-		alpha *= 0.9;
-		(*this->sout) << L"DISTANCIA " << i << L": " << num_words_dist[i] << endl;
+		res += alpha_aux * ((double)num_words_dist[i] / n);
+		alpha_aux *= alpha;
 	}
 
 	return res;

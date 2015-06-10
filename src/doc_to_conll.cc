@@ -36,7 +36,7 @@ int main (int argc, char **argv) {
   anlz.set_current_invoke_options(ivk);
 
   // crear output_conll
-  output_conll out(L"./output.cfg");
+  output_conll out(L"/home/samuel/Summarizer/src/output.cfg");
 
   /// load document to analyze
   wstring text;  
@@ -49,6 +49,8 @@ int main (int argc, char **argv) {
   anlz.analyze(text,doc);
 
   // imprimir document en format conll
+  wcout << text << endl;
+  wcout << L"<<<END-OF-TEXT>>>" << endl;
   out.PrintResults(wcout, doc);
 }
 

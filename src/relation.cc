@@ -109,11 +109,8 @@ list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring,
 	list<word_pos> res;
 	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
 	        it != unique_words.end(); it++) {
-		*sout << L"first : " << it->first << L"  " << it->second.first << endl;
-		*sout << L"second : " << it->second.second->w.get_form() << endl;
 		res.push_back(*(it->second).second);
 	}
-	*sout << L"WO? " << res.begin()->w.get_form() << endl;
 	return res;
 }
 
@@ -325,9 +322,7 @@ list<word_pos> SameCorefGroup::order_words_by_weight(const unordered_map<wstring
 	for (list<pair<int, word_pos*> >::const_iterator it = lst_to_order.begin();
 	        it != lst_to_order.end(); it++) {
 		res.push_back(*it->second);
-		*sout << it->second->w.get_form() << L" ";
 	}
-	*sout << endl;
 	return res;
 }
 

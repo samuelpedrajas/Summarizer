@@ -339,7 +339,15 @@ void summarizer::print_lexical_chains(map<wstring, list<lexical_chain>> &chains,
 	}
 }
 
-list<word_pos> summarizer::summarize(wostream &sout, const document &doc) {
+list<const sentence*> summarizer::wp_to_sp(list<word_pos> &wp_l) {
+	list<const sentence*> res;
+	for (list<word_pos>::const_iterator it = wp_l.begin(); it != wp_l.end(); it++) {
+		res.push_back(&(it->s));
+	}
+	return res;
+}
+
+list<const sentence*> summarizer::summarize(wostream &sout, const document &doc) {
 	// building lexical chains
 	map<wstring, list<lexical_chain>> chains = build_lexical_chains(sout, doc);
 
@@ -353,16 +361,18 @@ list<word_pos> summarizer::summarize(wostream &sout, const document &doc) {
 	// print chains
 	print_lexical_chains(chains, sout);
 
-	list<word_pos> res;
+	list<word_pos> wp_res;
 	if (heuristic == L"FirstMostWeightedWord") {
-		res = first_most_weighted_word(sout, chains);
+		wp_res = first_most_weighted_word(sout, chains);
 	} else if (heuristic == L"SumOfChainWeights") {
-		res = sum_of_chain_weights(sout, chains);
+		wp_res = sum_of_chain_weights(sout, chains);
 	} else {
-		res = first_word(sout, chains);
+		wp_res = first_word(sout, chains);
 	}
 
-	res.sort();
+	wp_res.sort();
+
+	list<const sentence*> res = wp_to_sp(wp_res);
 
 	return (res);
 }

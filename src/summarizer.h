@@ -20,7 +20,7 @@ public:
     /// Destructor
     ~summarizer();
 
-    std::list<word_pos> summarize(std::wostream &sout, const freeling::document &doc);
+    std::list<const freeling::sentence*> summarize(std::wostream &sout, const freeling::document &doc);
 
 private:
     bool remove_used_lexical_chains;
@@ -64,4 +64,6 @@ private:
             std::map<std::wstring, std::list<lexical_chain> > &chains) const;
 
     relation * tag_to_rel(const std::wstring ws, std::wostream &sout) const;
+
+    std::list<const freeling::sentence*> wp_to_sp(std::list<word_pos> &wp_l);
 };

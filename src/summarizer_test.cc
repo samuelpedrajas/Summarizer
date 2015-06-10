@@ -63,13 +63,13 @@ int main (int argc, char **argv) {
 
 
   summarizer sum(L"/home/samuel/Summarizer/src/summarizer.dat");
-  list<word_pos> selected_sentences = sum.summarize(wcout, doc);
+  list<const sentence*> selected_sentences = sum.summarize(wcout, doc);
 
-  for (list<word_pos>::const_iterator it = selected_sentences.begin();
+  for (list<const sentence*>::const_iterator it = selected_sentences.begin();
        it != selected_sentences.end(); it++) {
-    const sentence & s = it->s;
-    sentence::const_iterator b_it = s.begin();
-    sentence::const_iterator e_it = --s.end();
+    const sentence * s = *it;
+    sentence::const_iterator b_it = s->begin();
+    sentence::const_iterator e_it = --s->end();
     unsigned long span_start = b_it->get_span_start();
     unsigned long span_finish = e_it->get_span_finish();
 

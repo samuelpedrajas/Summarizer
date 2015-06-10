@@ -286,13 +286,13 @@ double SameCorefGroup::get_homogeneity_index(const list<word_pos> &words, const 
 	regexp re_nn(L"^NN");
 	for (list<word_pos>::const_iterator it = words.begin(); it != words.end(); it++) {
 		if (!prp_found && re_prp.search((it->w).get_tag())) {
-			hi++;
+			hi += 1.0;
 			prp_found = true;
 		} else if (!np_found && re_np.search((it->w).get_tag())) {
-			hi++;
+			hi += 1.0;
 			np_found = true;
 		} else if (re_nn.search((it->w).get_tag())) {
-			hi++;
+			hi += 1.0;
 		}
 	}
 	return (1.0 - (double) (hi / words.size()));

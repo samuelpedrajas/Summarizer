@@ -275,24 +275,23 @@ SameCorefGroup::SameCorefGroup(wostream &sout) : relation(L"Same Coreference Gro
 
 double SameCorefGroup::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,
         const unordered_map<wstring, pair<int, word_pos*> > &unique_words) {
-	double hi = 0;
-	bool prp_found = false;
-	bool np_found = false;
-	regexp re_prp(L"^(PRP|Z)");
+	int nnc = 0;
+	int nnp = 0;
 	regexp re_np(L"^NP");
 	regexp re_nn(L"^NN");
-	for (list<word_pos>::const_iterator it = words.begin(); it != words.end(); it++) {
-		if (!prp_found && re_prp.search((it->w).get_tag())) {
-			hi += 1.0;
-			prp_found = true;
-		} else if (!np_found && re_np.search((it->w).get_tag())) {
-			hi += 1.0;
-			np_found = true;
-		} else if (re_nn.search((it->w).get_tag())) {
-			hi += 1.0;
+	for (unordered_map<wstring, pair<int, word_pos*> >::const_iterator it = unique_words.begin();
+			it != unique_words.end(); it++) {
+		if (re_np.search((it->second).second->w.get_tag())) {
+			nnp++;
+		} else if (re_nn.search((it->second).second->w.get_tag())) {
+			nnc++;
 		}
 	}
-	return (1.0 - (double) (hi / words.size()));
+	double numerator = 0;
+	if (nnp > 0) numerator = nnp;
+	else if (nnc > 0) numerator = nnc;
+	else numerator = unique_words.size();
+	return (1.0 - (double) (numerator / words.size()));
 }
 
 bool order_by_tag_and_score (const pair<int, word_pos*> &p1, const pair<int, word_pos*> &p2)

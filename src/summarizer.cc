@@ -359,7 +359,7 @@ list<const sentence*> summarizer::summarize(wostream &sout, const document &doc)
 	}
 
 	// print chains
-	// print_lexical_chains(chains, sout);
+	print_lexical_chains(chains, sout);
 
 	list<word_pos> wp_res;
 	if (heuristic == L"FirstMostWeightedWord") {

@@ -321,7 +321,7 @@ void summarizer::remove_weak_lexical_chains(map<wstring, list<lexical_chain>> &c
 
 		while (it != lexical_chains.end())
 		{
-			if (it->get_score() <= (avg + 2.0 * sd)) {
+			if (it->get_score() <= (avg + 1.0 * sd)) {
 				it = lexical_chains.erase(it);
 			} else it++;
 		}

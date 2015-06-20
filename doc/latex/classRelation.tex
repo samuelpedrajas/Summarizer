@@ -1,0 +1,186 @@
+\hypertarget{classRelation}{}\section{Relation Class Reference}
+\label{classRelation}\index{Relation@{Relation}}
+
+
+Class \hyperlink{classRelation}{Relation} is a non-\/instantiable class which defines many virtual methods to check if a word is compatible with the \hyperlink{classRelation}{Relation} or if a word can be stored in the structures of a lexical chain.  
+
+
+
+
+{\ttfamily \#include $<$Relation.\+h$>$}
+
+
+
+Inheritance diagram for Relation\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classRelation__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Relation\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classRelation__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRelation_a4f4b35ad4cf4df6269634c9e4d5e4750}{Relation} (const std\+::wstring s, const std\+::wstring t)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classRelation_ad8bc5c349f9d98b15972fd0b09f341cc}{$\sim$\+Relation} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classRelation_a93391c4c61443f458b164b3732ee9584}{is\+\_\+compatible} (const freeling\+::word \&w) const 
+\begin{DoxyCompactList}\small\item\em True if the words tag is compatible with the relation. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classRelation_a977bc3e777d41eb53dcae0cd194d7a0b}{compute\+\_\+word} (const freeling\+::word \&w, const freeling\+::sentence \&s, const freeling\+::document \&doc, int n\+\_\+paragraph, int n\+\_\+sentence, int position, std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \&words, std\+::list$<$ \hyperlink{structrelated__words}{related\+\_\+words} $>$ \&relations, std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, \hyperlink{structword__pos}{word\+\_\+pos} $\ast$ $>$ $>$ \&unique\+\_\+words) const =0
+\item 
+virtual double \hyperlink{classRelation_a0037fb98b82d84643ad7f2e6c436d0a4}{get\+\_\+homogeneity\+\_\+index} (const std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \&words, const std\+::list$<$ \hyperlink{structrelated__words}{related\+\_\+words} $>$ \&relations, const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, \hyperlink{structword__pos}{word\+\_\+pos} $\ast$ $>$ $>$ \&unique\+\_\+words)=0
+\item 
+virtual std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \hyperlink{classRelation_ae19d8d190681b0f47a19d4fb0618b7b3}{order\+\_\+words\+\_\+by\+\_\+weight} (const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, \hyperlink{structword__pos}{word\+\_\+pos} $\ast$ $>$ $>$ \&unique\+\_\+words) const =0
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::wstring \hyperlink{classRelation_a4885622334809b177f87b9034d9218fe}{label}
+\begin{DoxyCompactList}\small\item\em Label with the name of the related. It is used for debugging. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classRelation_a634818cf4618e3862961d457e8ba0448}{max\+\_\+distance} = 0
+\begin{DoxyCompactList}\small\item\em The maximum distance in phrases between two words to be related. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const freeling\+::regexp \hyperlink{classRelation_a3c44dc364bd5530017a4828fee9a14bf}{compatible\+\_\+tag}
+\begin{DoxyCompactList}\small\item\em If a word tag matchs with compatible\+\_\+tag, then the word is compatible with the relation. \end{DoxyCompactList}\item 
+std\+::wostream $\ast$ \hyperlink{classRelation_a44deec0ee05d803ea23e14520fd57a75}{sout}
+\begin{DoxyCompactList}\small\item\em Pointer to a wostream to debug. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class \hyperlink{classRelation}{Relation} is a non-\/instantiable class which defines many virtual methods to check if a word is compatible with the \hyperlink{classRelation}{Relation} or if a word can be stored in the structures of a lexical chain. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classRelation_a4f4b35ad4cf4df6269634c9e4d5e4750}{}\index{Relation@{Relation}!Relation@{Relation}}
+\index{Relation@{Relation}!Relation@{Relation}}
+\subsubsection[{Relation}]{\setlength{\rightskip}{0pt plus 5cm}Relation\+::\+Relation (
+\begin{DoxyParamCaption}
+\item[{const std\+::wstring}]{s, }
+\item[{const std\+::wstring}]{t}
+\end{DoxyParamCaption}
+)}\label{classRelation_a4f4b35ad4cf4df6269634c9e4d5e4750}
+
+
+Constructor. 
+
+\hypertarget{classRelation_ad8bc5c349f9d98b15972fd0b09f341cc}{}\index{Relation@{Relation}!````~Relation@{$\sim$\+Relation}}
+\index{````~Relation@{$\sim$\+Relation}!Relation@{Relation}}
+\subsubsection[{$\sim$\+Relation}]{\setlength{\rightskip}{0pt plus 5cm}Relation\+::$\sim$\+Relation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classRelation_ad8bc5c349f9d98b15972fd0b09f341cc}
+
+
+Destructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classRelation_a977bc3e777d41eb53dcae0cd194d7a0b}{}\index{Relation@{Relation}!compute\+\_\+word@{compute\+\_\+word}}
+\index{compute\+\_\+word@{compute\+\_\+word}!Relation@{Relation}}
+\subsubsection[{compute\+\_\+word}]{\setlength{\rightskip}{0pt plus 5cm}bool Relation\+::compute\+\_\+word (
+\begin{DoxyParamCaption}
+\item[{const freeling\+::word \&}]{w, }
+\item[{const freeling\+::sentence \&}]{s, }
+\item[{const freeling\+::document \&}]{doc, }
+\item[{int}]{n\+\_\+paragraph, }
+\item[{int}]{n\+\_\+sentence, }
+\item[{int}]{position, }
+\item[{std\+::list$<$ {\bf word\+\_\+pos} $>$ \&}]{words, }
+\item[{std\+::list$<$ {\bf related\+\_\+words} $>$ \&}]{relations, }
+\item[{std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, {\bf word\+\_\+pos} $\ast$ $>$ $>$ \&}]{unique\+\_\+words}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classRelation_a977bc3e777d41eb53dcae0cd194d7a0b}
+
+
+Implemented in \hyperlink{classSameCorefGroup_a6e2b2784fbac185dc16af242280ff082}{Same\+Coref\+Group}, \hyperlink{classHypernymy_a9eb6e16f7b8128b9865c43df41940a77}{Hypernymy}, and \hyperlink{classSameWord_a3773253aec894b3a50c5d03e5725f4bf}{Same\+Word}.
+
+\hypertarget{classRelation_a0037fb98b82d84643ad7f2e6c436d0a4}{}\index{Relation@{Relation}!get\+\_\+homogeneity\+\_\+index@{get\+\_\+homogeneity\+\_\+index}}
+\index{get\+\_\+homogeneity\+\_\+index@{get\+\_\+homogeneity\+\_\+index}!Relation@{Relation}}
+\subsubsection[{get\+\_\+homogeneity\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}virtual double Relation\+::get\+\_\+homogeneity\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{const std\+::list$<$ {\bf word\+\_\+pos} $>$ \&}]{words, }
+\item[{const std\+::list$<$ {\bf related\+\_\+words} $>$ \&}]{relations, }
+\item[{const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, {\bf word\+\_\+pos} $\ast$ $>$ $>$ \&}]{unique\+\_\+words}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classRelation_a0037fb98b82d84643ad7f2e6c436d0a4}
+
+
+Implemented in \hyperlink{classSameCorefGroup_a7b6e236b68a30f2b24e5838af6c16a7b}{Same\+Coref\+Group}, \hyperlink{classHypernymy_a597074abd7795e114d13783677e55e20}{Hypernymy}, and \hyperlink{classSameWord_a3c0506fe869c16d2c7d20d5647a6c99f}{Same\+Word}.
+
+\hypertarget{classRelation_a93391c4c61443f458b164b3732ee9584}{}\index{Relation@{Relation}!is\+\_\+compatible@{is\+\_\+compatible}}
+\index{is\+\_\+compatible@{is\+\_\+compatible}!Relation@{Relation}}
+\subsubsection[{is\+\_\+compatible}]{\setlength{\rightskip}{0pt plus 5cm}bool Relation\+::is\+\_\+compatible (
+\begin{DoxyParamCaption}
+\item[{const freeling\+::word \&}]{w}
+\end{DoxyParamCaption}
+) const}\label{classRelation_a93391c4c61443f458b164b3732ee9584}
+
+
+True if the words tag is compatible with the relation. 
+
+\hypertarget{classRelation_ae19d8d190681b0f47a19d4fb0618b7b3}{}\index{Relation@{Relation}!order\+\_\+words\+\_\+by\+\_\+weight@{order\+\_\+words\+\_\+by\+\_\+weight}}
+\index{order\+\_\+words\+\_\+by\+\_\+weight@{order\+\_\+words\+\_\+by\+\_\+weight}!Relation@{Relation}}
+\subsubsection[{order\+\_\+words\+\_\+by\+\_\+weight}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::list$<${\bf word\+\_\+pos}$>$ Relation\+::order\+\_\+words\+\_\+by\+\_\+weight (
+\begin{DoxyParamCaption}
+\item[{const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, {\bf word\+\_\+pos} $\ast$ $>$ $>$ \&}]{unique\+\_\+words}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classRelation_ae19d8d190681b0f47a19d4fb0618b7b3}
+
+
+Implemented in \hyperlink{classSameCorefGroup_a44e442d53523999350cbb37cb40918f4}{Same\+Coref\+Group}, \hyperlink{classHypernymy_aaa6ac1db9e77a937d38f6e19c550f62f}{Hypernymy}, and \hyperlink{classSameWord_a633fbd80c1abe38b71af82cc3fb3e528}{Same\+Word}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classRelation_a3c44dc364bd5530017a4828fee9a14bf}{}\index{Relation@{Relation}!compatible\+\_\+tag@{compatible\+\_\+tag}}
+\index{compatible\+\_\+tag@{compatible\+\_\+tag}!Relation@{Relation}}
+\subsubsection[{compatible\+\_\+tag}]{\setlength{\rightskip}{0pt plus 5cm}const freeling\+::regexp Relation\+::compatible\+\_\+tag\hspace{0.3cm}{\ttfamily [protected]}}\label{classRelation_a3c44dc364bd5530017a4828fee9a14bf}
+
+
+If a word tag matchs with compatible\+\_\+tag, then the word is compatible with the relation. 
+
+\hypertarget{classRelation_a4885622334809b177f87b9034d9218fe}{}\index{Relation@{Relation}!label@{label}}
+\index{label@{label}!Relation@{Relation}}
+\subsubsection[{label}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::wstring Relation\+::label}\label{classRelation_a4885622334809b177f87b9034d9218fe}
+
+
+Label with the name of the related. It is used for debugging. 
+
+\hypertarget{classRelation_a634818cf4618e3862961d457e8ba0448}{}\index{Relation@{Relation}!max\+\_\+distance@{max\+\_\+distance}}
+\index{max\+\_\+distance@{max\+\_\+distance}!Relation@{Relation}}
+\subsubsection[{max\+\_\+distance}]{\setlength{\rightskip}{0pt plus 5cm}int Relation\+::max\+\_\+distance = 0\hspace{0.3cm}{\ttfamily [static]}}\label{classRelation_a634818cf4618e3862961d457e8ba0448}
+
+
+The maximum distance in phrases between two words to be related. 
+
+\hypertarget{classRelation_a44deec0ee05d803ea23e14520fd57a75}{}\index{Relation@{Relation}!sout@{sout}}
+\index{sout@{sout}!Relation@{Relation}}
+\subsubsection[{sout}]{\setlength{\rightskip}{0pt plus 5cm}std\+::wostream$\ast$ Relation\+::sout\hspace{0.3cm}{\ttfamily [protected]}}\label{classRelation_a44deec0ee05d803ea23e14520fd57a75}
+
+
+Pointer to a wostream to debug. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/samuel/\+Summarizer/src/\hyperlink{Relation_8h}{Relation.\+h}\item 
+/home/samuel/\+Summarizer/src/\hyperlink{Relation_8cc}{Relation.\+cc}\end{DoxyCompactItemize}

@@ -1,0 +1,154 @@
+\hypertarget{classLexicalChain}{}\section{Lexical\+Chain Class Reference}
+\label{classLexicalChain}\index{Lexical\+Chain@{Lexical\+Chain}}
+
+
+Class \hyperlink{classLexicalChain}{Lexical\+Chain} represents a lexical chain and computes words and stores (or not) them into the structures.  
+
+
+
+
+{\ttfamily \#include $<$Lexical\+Chain.\+h$>$}
+
+
+
+Collaboration diagram for Lexical\+Chain\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{classLexicalChain__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLexicalChain_a1035313b140bb9833030d54f2a616082}{Lexical\+Chain} (\hyperlink{classRelation}{Relation} $\ast$r, const freeling\+::word \&w, const freeling\+::sentence \&s, int n\+\_\+paragraph, int n\+\_\+sentence, int position)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classLexicalChain_a95f08ad98d07d5eec86cf68b77bc6eee}{$\sim$\+Lexical\+Chain} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classLexicalChain_a22e252664430e855efd2adc05d120952}{compute\+\_\+word} (const freeling\+::word \&w, const freeling\+::sentence \&s, const freeling\+::document \&doc, int n\+\_\+paragraph, int n\+\_\+sentence, int position, std\+::wostream \&sout)
+\begin{DoxyCompactList}\small\item\em Computes a word, if the word an be added to the lexical chain, this method stores it in its structures and return true. \end{DoxyCompactList}\item 
+double \hyperlink{classLexicalChain_ad7b400e51350a05025d93ca1d97ee4a9}{get\+\_\+score} ()
+\begin{DoxyCompactList}\small\item\em Get the score of the lexical chain. \end{DoxyCompactList}\item 
+int \hyperlink{classLexicalChain_a43ccc424bcb3be5d7051853e0a310294}{get\+\_\+number\+\_\+of\+\_\+words} () const 
+\begin{DoxyCompactList}\small\item\em Get the number of words inside the lexical chain. \end{DoxyCompactList}\item 
+const std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \& \hyperlink{classLexicalChain_ac3c54f9712f691928d1fb20d8924f441}{get\+\_\+words} () const 
+\begin{DoxyCompactList}\small\item\em Get all the words embedded in a \hyperlink{structword__pos}{word\+\_\+pos} struct of the lexical chain. \end{DoxyCompactList}\item 
+std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \hyperlink{classLexicalChain_a64ab9f2876759a969c65e2dd098b621e}{get\+\_\+ordered\+\_\+words} () const 
+\begin{DoxyCompactList}\small\item\em Get all the words ordered by frequency. \end{DoxyCompactList}\item 
+std\+::wstring \hyperlink{classLexicalChain_ad5b4964c0dbee6e5376e7c350fc69962}{to\+String} ()
+\begin{DoxyCompactList}\small\item\em Get a string representation of the lexical chain to debug. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class \hyperlink{classLexicalChain}{Lexical\+Chain} represents a lexical chain and computes words and stores (or not) them into the structures. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classLexicalChain_a1035313b140bb9833030d54f2a616082}{}\index{Lexical\+Chain@{Lexical\+Chain}!Lexical\+Chain@{Lexical\+Chain}}
+\index{Lexical\+Chain@{Lexical\+Chain}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{Lexical\+Chain}]{\setlength{\rightskip}{0pt plus 5cm}Lexical\+Chain\+::\+Lexical\+Chain (
+\begin{DoxyParamCaption}
+\item[{{\bf Relation} $\ast$}]{r, }
+\item[{const freeling\+::word \&}]{w, }
+\item[{const freeling\+::sentence \&}]{s, }
+\item[{int}]{n\+\_\+paragraph, }
+\item[{int}]{n\+\_\+sentence, }
+\item[{int}]{position}
+\end{DoxyParamCaption}
+)}\label{classLexicalChain_a1035313b140bb9833030d54f2a616082}
+
+
+Constructor. 
+
+\hypertarget{classLexicalChain_a95f08ad98d07d5eec86cf68b77bc6eee}{}\index{Lexical\+Chain@{Lexical\+Chain}!````~Lexical\+Chain@{$\sim$\+Lexical\+Chain}}
+\index{````~Lexical\+Chain@{$\sim$\+Lexical\+Chain}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{$\sim$\+Lexical\+Chain}]{\setlength{\rightskip}{0pt plus 5cm}Lexical\+Chain\+::$\sim$\+Lexical\+Chain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classLexicalChain_a95f08ad98d07d5eec86cf68b77bc6eee}
+
+
+Destructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classLexicalChain_a22e252664430e855efd2adc05d120952}{}\index{Lexical\+Chain@{Lexical\+Chain}!compute\+\_\+word@{compute\+\_\+word}}
+\index{compute\+\_\+word@{compute\+\_\+word}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{compute\+\_\+word}]{\setlength{\rightskip}{0pt plus 5cm}bool Lexical\+Chain\+::compute\+\_\+word (
+\begin{DoxyParamCaption}
+\item[{const freeling\+::word \&}]{w, }
+\item[{const freeling\+::sentence \&}]{s, }
+\item[{const freeling\+::document \&}]{doc, }
+\item[{int}]{n\+\_\+paragraph, }
+\item[{int}]{n\+\_\+sentence, }
+\item[{int}]{position, }
+\item[{std\+::wostream \&}]{sout}
+\end{DoxyParamCaption}
+)}\label{classLexicalChain_a22e252664430e855efd2adc05d120952}
+
+
+Computes a word, if the word an be added to the lexical chain, this method stores it in its structures and return true. 
+
+Otherwise, it does nothing and returns false. \hypertarget{classLexicalChain_a43ccc424bcb3be5d7051853e0a310294}{}\index{Lexical\+Chain@{Lexical\+Chain}!get\+\_\+number\+\_\+of\+\_\+words@{get\+\_\+number\+\_\+of\+\_\+words}}
+\index{get\+\_\+number\+\_\+of\+\_\+words@{get\+\_\+number\+\_\+of\+\_\+words}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{get\+\_\+number\+\_\+of\+\_\+words}]{\setlength{\rightskip}{0pt plus 5cm}int Lexical\+Chain\+::get\+\_\+number\+\_\+of\+\_\+words (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\label{classLexicalChain_a43ccc424bcb3be5d7051853e0a310294}
+
+
+Get the number of words inside the lexical chain. 
+
+\hypertarget{classLexicalChain_a64ab9f2876759a969c65e2dd098b621e}{}\index{Lexical\+Chain@{Lexical\+Chain}!get\+\_\+ordered\+\_\+words@{get\+\_\+ordered\+\_\+words}}
+\index{get\+\_\+ordered\+\_\+words@{get\+\_\+ordered\+\_\+words}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{get\+\_\+ordered\+\_\+words}]{\setlength{\rightskip}{0pt plus 5cm}list$<$ {\bf word\+\_\+pos} $>$ Lexical\+Chain\+::get\+\_\+ordered\+\_\+words (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\label{classLexicalChain_a64ab9f2876759a969c65e2dd098b621e}
+
+
+Get all the words ordered by frequency. 
+
+\hypertarget{classLexicalChain_ad7b400e51350a05025d93ca1d97ee4a9}{}\index{Lexical\+Chain@{Lexical\+Chain}!get\+\_\+score@{get\+\_\+score}}
+\index{get\+\_\+score@{get\+\_\+score}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{get\+\_\+score}]{\setlength{\rightskip}{0pt plus 5cm}double Lexical\+Chain\+::get\+\_\+score (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classLexicalChain_ad7b400e51350a05025d93ca1d97ee4a9}
+
+
+Get the score of the lexical chain. 
+
+\hypertarget{classLexicalChain_ac3c54f9712f691928d1fb20d8924f441}{}\index{Lexical\+Chain@{Lexical\+Chain}!get\+\_\+words@{get\+\_\+words}}
+\index{get\+\_\+words@{get\+\_\+words}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{get\+\_\+words}]{\setlength{\rightskip}{0pt plus 5cm}const list$<$ {\bf word\+\_\+pos} $>$ \& Lexical\+Chain\+::get\+\_\+words (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\label{classLexicalChain_ac3c54f9712f691928d1fb20d8924f441}
+
+
+Get all the words embedded in a \hyperlink{structword__pos}{word\+\_\+pos} struct of the lexical chain. 
+
+\hypertarget{classLexicalChain_ad5b4964c0dbee6e5376e7c350fc69962}{}\index{Lexical\+Chain@{Lexical\+Chain}!to\+String@{to\+String}}
+\index{to\+String@{to\+String}!Lexical\+Chain@{Lexical\+Chain}}
+\subsubsection[{to\+String}]{\setlength{\rightskip}{0pt plus 5cm}wstring Lexical\+Chain\+::to\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classLexicalChain_ad5b4964c0dbee6e5376e7c350fc69962}
+
+
+Get a string representation of the lexical chain to debug. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/samuel/\+Summarizer/src/\hyperlink{LexicalChain_8h}{Lexical\+Chain.\+h}\item 
+/home/samuel/\+Summarizer/src/\hyperlink{LexicalChain_8cc}{Lexical\+Chain.\+cc}\end{DoxyCompactItemize}

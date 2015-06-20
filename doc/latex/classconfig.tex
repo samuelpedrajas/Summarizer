@@ -1,0 +1,165 @@
+\hypertarget{classconfig}{}\section{config Class Reference}
+\label{classconfig}\index{config@{config}}
+
+
+Class config implements a set of specific options for the N\+L\+P analyzer, providing a C++ wrapper to libcfg+ library.  
+
+
+
+
+{\ttfamily \#include $<$config.\+h$>$}
+
+
+
+Collaboration diagram for config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{classconfig__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classconfig_afe4a0fda7bf097bd04d713c06797e1f1}{config} (int ac, char $\ast$$\ast$av)
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \hyperlink{classconfig_a24ba112bf45f600af2f79352b1c26646}{Config\+File}
+\item 
+bool \hyperlink{classconfig_a8868de72bdafb627b21b7f20e16ebf9e}{Server}
+\begin{DoxyCompactList}\small\item\em Server mode on/off. \end{DoxyCompactList}\item 
+int \hyperlink{classconfig_a05e9c81408b74459038340658bcd3a20}{Port}
+\begin{DoxyCompactList}\small\item\em port number for server mode \end{DoxyCompactList}\item 
+int \hyperlink{classconfig_a8771443c351f1d07be7eccc02beb8fff}{Max\+Workers}
+\begin{DoxyCompactList}\small\item\em Maximum number of workers to fork (i.\+e. number of simultaneously atended clients) \end{DoxyCompactList}\item 
+int \hyperlink{classconfig_ab690d59ef9d289198d2676ddc6bd5772}{Queue\+Size}
+\begin{DoxyCompactList}\small\item\em Size of socket queue (number of clients waiting to be atended without being rejected) \end{DoxyCompactList}\item 
+std\+::wstring \hyperlink{classconfig_a850a92a12eacd1bfee3f917792463b3f}{Locale}
+\begin{DoxyCompactList}\small\item\em Locale of text to process. \end{DoxyCompactList}\item 
+std\+::wstring \hyperlink{classconfig_a66b67d42d16146ebcc7f7bc355c5b60c}{I\+D\+E\+N\+T\+\_\+ident\+File}
+\begin{DoxyCompactList}\small\item\em Configuration file for language identifier. \end{DoxyCompactList}\item 
+\hyperlink{config_8h_ad5cac7b85d200232841f3f0a31bea5c1}{Input\+Modes} \hyperlink{classconfig_a081f4b86bc4315514b3693da987da11f}{Input\+Mode}
+\begin{DoxyCompactList}\small\item\em Mode used to process input\+: D\+O\+C\+: load a document, then process it. \end{DoxyCompactList}\item 
+\hyperlink{config_8h_a3f8677a5e7c7cdae9eae3f84e38bd5bd}{Output\+Formats} \hyperlink{classconfig_a79e21d6098e5fd1bfe615e2fef84a99f}{Output\+Format}
+\begin{DoxyCompactList}\small\item\em Selected input and output format. \end{DoxyCompactList}\item 
+\hyperlink{config_8h_aa29a34e3d6e44b1b5d909fb8cfcfdfb6}{Input\+Formats} \hyperlink{classconfig_ab66ebbcc7f73de39355cdf724cd644e6}{Input\+Format}
+\item 
+bool \hyperlink{classconfig_a604dde733e96d20cb065e2d39f8fe0e7}{Always\+Flush}
+\begin{DoxyCompactList}\small\item\em whether splitter buffer must be flushed at each line \end{DoxyCompactList}\item 
+std\+::wstring \hyperlink{classconfig_a6f42f7c1c60685d9b223fa9dc717a947}{T\+A\+G\+S\+E\+T\+\_\+\+Tagset\+File}
+\begin{DoxyCompactList}\small\item\em Tagset to use for shortening tags in output. \end{DoxyCompactList}\item 
+analyzer\+::config\+\_\+options \hyperlink{classconfig_a41502293ebef90c329451672bd879764}{analyzer\+\_\+config\+\_\+options}
+\item 
+analyzer\+::invoke\+\_\+options \hyperlink{classconfig_a0e4c6bbdd48bd59be36052970af2abff}{analyzer\+\_\+invoke\+\_\+options}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class config implements a set of specific options for the N\+L\+P analyzer, providing a C++ wrapper to libcfg+ library. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classconfig_afe4a0fda7bf097bd04d713c06797e1f1}{}\index{config@{config}!config@{config}}
+\index{config@{config}!config@{config}}
+\subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}config\+::config (
+\begin{DoxyParamCaption}
+\item[{int}]{ac, }
+\item[{char $\ast$$\ast$}]{av}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classconfig_afe4a0fda7bf097bd04d713c06797e1f1}
+
+
+constructor 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classconfig_a604dde733e96d20cb065e2d39f8fe0e7}{}\index{config@{config}!Always\+Flush@{Always\+Flush}}
+\index{Always\+Flush@{Always\+Flush}!config@{config}}
+\subsubsection[{Always\+Flush}]{\setlength{\rightskip}{0pt plus 5cm}bool config\+::\+Always\+Flush}\label{classconfig_a604dde733e96d20cb065e2d39f8fe0e7}
+
+
+whether splitter buffer must be flushed at each line 
+
+\hypertarget{classconfig_a41502293ebef90c329451672bd879764}{}\index{config@{config}!analyzer\+\_\+config\+\_\+options@{analyzer\+\_\+config\+\_\+options}}
+\index{analyzer\+\_\+config\+\_\+options@{analyzer\+\_\+config\+\_\+options}!config@{config}}
+\subsubsection[{analyzer\+\_\+config\+\_\+options}]{\setlength{\rightskip}{0pt plus 5cm}analyzer\+::config\+\_\+options config\+::analyzer\+\_\+config\+\_\+options}\label{classconfig_a41502293ebef90c329451672bd879764}
+\hypertarget{classconfig_a0e4c6bbdd48bd59be36052970af2abff}{}\index{config@{config}!analyzer\+\_\+invoke\+\_\+options@{analyzer\+\_\+invoke\+\_\+options}}
+\index{analyzer\+\_\+invoke\+\_\+options@{analyzer\+\_\+invoke\+\_\+options}!config@{config}}
+\subsubsection[{analyzer\+\_\+invoke\+\_\+options}]{\setlength{\rightskip}{0pt plus 5cm}analyzer\+::invoke\+\_\+options config\+::analyzer\+\_\+invoke\+\_\+options}\label{classconfig_a0e4c6bbdd48bd59be36052970af2abff}
+\hypertarget{classconfig_a24ba112bf45f600af2f79352b1c26646}{}\index{config@{config}!Config\+File@{Config\+File}}
+\index{Config\+File@{Config\+File}!config@{config}}
+\subsubsection[{Config\+File}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string config\+::\+Config\+File}\label{classconfig_a24ba112bf45f600af2f79352b1c26646}
+\hypertarget{classconfig_a66b67d42d16146ebcc7f7bc355c5b60c}{}\index{config@{config}!I\+D\+E\+N\+T\+\_\+ident\+File@{I\+D\+E\+N\+T\+\_\+ident\+File}}
+\index{I\+D\+E\+N\+T\+\_\+ident\+File@{I\+D\+E\+N\+T\+\_\+ident\+File}!config@{config}}
+\subsubsection[{I\+D\+E\+N\+T\+\_\+ident\+File}]{\setlength{\rightskip}{0pt plus 5cm}std\+::wstring config\+::\+I\+D\+E\+N\+T\+\_\+ident\+File}\label{classconfig_a66b67d42d16146ebcc7f7bc355c5b60c}
+
+
+Configuration file for language identifier. 
+
+\hypertarget{classconfig_ab66ebbcc7f73de39355cdf724cd644e6}{}\index{config@{config}!Input\+Format@{Input\+Format}}
+\index{Input\+Format@{Input\+Format}!config@{config}}
+\subsubsection[{Input\+Format}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Input\+Formats} config\+::\+Input\+Format}\label{classconfig_ab66ebbcc7f73de39355cdf724cd644e6}
+\hypertarget{classconfig_a081f4b86bc4315514b3693da987da11f}{}\index{config@{config}!Input\+Mode@{Input\+Mode}}
+\index{Input\+Mode@{Input\+Mode}!config@{config}}
+\subsubsection[{Input\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Input\+Modes} config\+::\+Input\+Mode}\label{classconfig_a081f4b86bc4315514b3693da987da11f}
+
+
+Mode used to process input\+: D\+O\+C\+: load a document, then process it. 
+
+C\+O\+R\+P\+U\+S\+: infinite sentence-\/by-\/sentnce processing \hypertarget{classconfig_a850a92a12eacd1bfee3f917792463b3f}{}\index{config@{config}!Locale@{Locale}}
+\index{Locale@{Locale}!config@{config}}
+\subsubsection[{Locale}]{\setlength{\rightskip}{0pt plus 5cm}std\+::wstring config\+::\+Locale}\label{classconfig_a850a92a12eacd1bfee3f917792463b3f}
+
+
+Locale of text to process. 
+
+\hypertarget{classconfig_a8771443c351f1d07be7eccc02beb8fff}{}\index{config@{config}!Max\+Workers@{Max\+Workers}}
+\index{Max\+Workers@{Max\+Workers}!config@{config}}
+\subsubsection[{Max\+Workers}]{\setlength{\rightskip}{0pt plus 5cm}int config\+::\+Max\+Workers}\label{classconfig_a8771443c351f1d07be7eccc02beb8fff}
+
+
+Maximum number of workers to fork (i.\+e. number of simultaneously atended clients) 
+
+\hypertarget{classconfig_a79e21d6098e5fd1bfe615e2fef84a99f}{}\index{config@{config}!Output\+Format@{Output\+Format}}
+\index{Output\+Format@{Output\+Format}!config@{config}}
+\subsubsection[{Output\+Format}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Output\+Formats} config\+::\+Output\+Format}\label{classconfig_a79e21d6098e5fd1bfe615e2fef84a99f}
+
+
+Selected input and output format. 
+
+\hypertarget{classconfig_a05e9c81408b74459038340658bcd3a20}{}\index{config@{config}!Port@{Port}}
+\index{Port@{Port}!config@{config}}
+\subsubsection[{Port}]{\setlength{\rightskip}{0pt plus 5cm}int config\+::\+Port}\label{classconfig_a05e9c81408b74459038340658bcd3a20}
+
+
+port number for server mode 
+
+\hypertarget{classconfig_ab690d59ef9d289198d2676ddc6bd5772}{}\index{config@{config}!Queue\+Size@{Queue\+Size}}
+\index{Queue\+Size@{Queue\+Size}!config@{config}}
+\subsubsection[{Queue\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int config\+::\+Queue\+Size}\label{classconfig_ab690d59ef9d289198d2676ddc6bd5772}
+
+
+Size of socket queue (number of clients waiting to be atended without being rejected) 
+
+\hypertarget{classconfig_a8868de72bdafb627b21b7f20e16ebf9e}{}\index{config@{config}!Server@{Server}}
+\index{Server@{Server}!config@{config}}
+\subsubsection[{Server}]{\setlength{\rightskip}{0pt plus 5cm}bool config\+::\+Server}\label{classconfig_a8868de72bdafb627b21b7f20e16ebf9e}
+
+
+Server mode on/off. 
+
+\hypertarget{classconfig_a6f42f7c1c60685d9b223fa9dc717a947}{}\index{config@{config}!T\+A\+G\+S\+E\+T\+\_\+\+Tagset\+File@{T\+A\+G\+S\+E\+T\+\_\+\+Tagset\+File}}
+\index{T\+A\+G\+S\+E\+T\+\_\+\+Tagset\+File@{T\+A\+G\+S\+E\+T\+\_\+\+Tagset\+File}!config@{config}}
+\subsubsection[{T\+A\+G\+S\+E\+T\+\_\+\+Tagset\+File}]{\setlength{\rightskip}{0pt plus 5cm}std\+::wstring config\+::\+T\+A\+G\+S\+E\+T\+\_\+\+Tagset\+File}\label{classconfig_a6f42f7c1c60685d9b223fa9dc717a947}
+
+
+Tagset to use for shortening tags in output. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/samuel/\+Summarizer/src/\hyperlink{config_8h}{config.\+h}\end{DoxyCompactItemize}

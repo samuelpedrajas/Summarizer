@@ -1,0 +1,124 @@
+\hypertarget{classSameWord}{}\section{Same\+Word Class Reference}
+\label{classSameWord}\index{Same\+Word@{Same\+Word}}
+
+
+Class \hyperlink{classSameWord}{Same\+Word} represents the same word relation\+: two words are related if they are the same word.  
+
+
+
+
+{\ttfamily \#include $<$Relation.\+h$>$}
+
+
+
+Inheritance diagram for Same\+Word\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classSameWord__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Same\+Word\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classSameWord__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSameWord_ac0dd07d610c7e8493ddaaf17c00db078}{Same\+Word} (std\+::wostream \&\hyperlink{classRelation_a44deec0ee05d803ea23e14520fd57a75}{sout})
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+double \hyperlink{classSameWord_a3c0506fe869c16d2c7d20d5647a6c99f}{get\+\_\+homogeneity\+\_\+index} (const std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \&words, const std\+::list$<$ \hyperlink{structrelated__words}{related\+\_\+words} $>$ \&relations, const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, \hyperlink{structword__pos}{word\+\_\+pos} $\ast$ $>$ $>$ \&unique\+\_\+words)
+\begin{DoxyCompactList}\small\item\em Computes the homogeinity index of the given structures using the specific formula of this relation. \end{DoxyCompactList}\item 
+bool \hyperlink{classSameWord_a3773253aec894b3a50c5d03e5725f4bf}{compute\+\_\+word} (const freeling\+::word \&w, const freeling\+::sentence \&s, const freeling\+::document \&doc, int n\+\_\+paragraph, int n\+\_\+sentence, int position, std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \&words, std\+::list$<$ \hyperlink{structrelated__words}{related\+\_\+words} $>$ \&relations, std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, \hyperlink{structword__pos}{word\+\_\+pos} $\ast$ $>$ $>$ \&unique\+\_\+words) const 
+\begin{DoxyCompactList}\small\item\em Returns true and stores the word w in the list words, list relations and unordered\+\_\+map unique\+\_\+words if w is compatible with the words in these structures using this relation. \end{DoxyCompactList}\item 
+std\+::list$<$ \hyperlink{structword__pos}{word\+\_\+pos} $>$ \hyperlink{classSameWord_a633fbd80c1abe38b71af82cc3fb3e528}{order\+\_\+words\+\_\+by\+\_\+weight} (const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, \hyperlink{structword__pos}{word\+\_\+pos} $\ast$ $>$ $>$ \&unique\+\_\+words) const 
+\begin{DoxyCompactList}\small\item\em In \hyperlink{classSameWord}{Same\+Word}, the words in unique\+\_\+words are not sorted because there is just one word. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Class \hyperlink{classSameWord}{Same\+Word} represents the same word relation\+: two words are related if they are the same word. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classSameWord_ac0dd07d610c7e8493ddaaf17c00db078}{}\index{Same\+Word@{Same\+Word}!Same\+Word@{Same\+Word}}
+\index{Same\+Word@{Same\+Word}!Same\+Word@{Same\+Word}}
+\subsubsection[{Same\+Word}]{\setlength{\rightskip}{0pt plus 5cm}Same\+Word\+::\+Same\+Word (
+\begin{DoxyParamCaption}
+\item[{std\+::wostream \&}]{sout}
+\end{DoxyParamCaption}
+)}\label{classSameWord_ac0dd07d610c7e8493ddaaf17c00db078}
+
+
+Constructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classSameWord_a3773253aec894b3a50c5d03e5725f4bf}{}\index{Same\+Word@{Same\+Word}!compute\+\_\+word@{compute\+\_\+word}}
+\index{compute\+\_\+word@{compute\+\_\+word}!Same\+Word@{Same\+Word}}
+\subsubsection[{compute\+\_\+word}]{\setlength{\rightskip}{0pt plus 5cm}bool Same\+Word\+::compute\+\_\+word (
+\begin{DoxyParamCaption}
+\item[{const freeling\+::word \&}]{w, }
+\item[{const freeling\+::sentence \&}]{s, }
+\item[{const freeling\+::document \&}]{doc, }
+\item[{int}]{n\+\_\+paragraph, }
+\item[{int}]{n\+\_\+sentence, }
+\item[{int}]{position, }
+\item[{std\+::list$<$ {\bf word\+\_\+pos} $>$ \&}]{words, }
+\item[{std\+::list$<$ {\bf related\+\_\+words} $>$ \&}]{relations, }
+\item[{std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, {\bf word\+\_\+pos} $\ast$ $>$ $>$ \&}]{unique\+\_\+words}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\label{classSameWord_a3773253aec894b3a50c5d03e5725f4bf}
+
+
+Returns true and stores the word w in the list words, list relations and unordered\+\_\+map unique\+\_\+words if w is compatible with the words in these structures using this relation. 
+
+
+
+Implements \hyperlink{classRelation_a977bc3e777d41eb53dcae0cd194d7a0b}{Relation}.
+
+\hypertarget{classSameWord_a3c0506fe869c16d2c7d20d5647a6c99f}{}\index{Same\+Word@{Same\+Word}!get\+\_\+homogeneity\+\_\+index@{get\+\_\+homogeneity\+\_\+index}}
+\index{get\+\_\+homogeneity\+\_\+index@{get\+\_\+homogeneity\+\_\+index}!Same\+Word@{Same\+Word}}
+\subsubsection[{get\+\_\+homogeneity\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}double Same\+Word\+::get\+\_\+homogeneity\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{const std\+::list$<$ {\bf word\+\_\+pos} $>$ \&}]{words, }
+\item[{const std\+::list$<$ {\bf related\+\_\+words} $>$ \&}]{relations, }
+\item[{const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, {\bf word\+\_\+pos} $\ast$ $>$ $>$ \&}]{unique\+\_\+words}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classSameWord_a3c0506fe869c16d2c7d20d5647a6c99f}
+
+
+Computes the homogeinity index of the given structures using the specific formula of this relation. 
+
+
+
+Implements \hyperlink{classRelation_a0037fb98b82d84643ad7f2e6c436d0a4}{Relation}.
+
+\hypertarget{classSameWord_a633fbd80c1abe38b71af82cc3fb3e528}{}\index{Same\+Word@{Same\+Word}!order\+\_\+words\+\_\+by\+\_\+weight@{order\+\_\+words\+\_\+by\+\_\+weight}}
+\index{order\+\_\+words\+\_\+by\+\_\+weight@{order\+\_\+words\+\_\+by\+\_\+weight}!Same\+Word@{Same\+Word}}
+\subsubsection[{order\+\_\+words\+\_\+by\+\_\+weight}]{\setlength{\rightskip}{0pt plus 5cm}list$<$ {\bf word\+\_\+pos} $>$ Same\+Word\+::order\+\_\+words\+\_\+by\+\_\+weight (
+\begin{DoxyParamCaption}
+\item[{const std\+::unordered\+\_\+map$<$ std\+::wstring, std\+::pair$<$ int, {\bf word\+\_\+pos} $\ast$ $>$ $>$ \&}]{unique\+\_\+words}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\label{classSameWord_a633fbd80c1abe38b71af82cc3fb3e528}
+
+
+In \hyperlink{classSameWord}{Same\+Word}, the words in unique\+\_\+words are not sorted because there is just one word. 
+
+It returns the \hyperlink{structword__pos}{word\+\_\+pos} in unique\+\_\+words in a list. 
+
+Implements \hyperlink{classRelation_ae19d8d190681b0f47a19d4fb0618b7b3}{Relation}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/samuel/\+Summarizer/src/\hyperlink{Relation_8h}{Relation.\+h}\item 
+/home/samuel/\+Summarizer/src/\hyperlink{Relation_8cc}{Relation.\+cc}\end{DoxyCompactItemize}

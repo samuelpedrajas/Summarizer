@@ -1,0 +1,42 @@
+\hypertarget{Relation_8h}{}\section{/home/samuel/\+Summarizer/src/\+Relation.h File Reference}
+\label{Relation_8h}\index{/home/samuel/\+Summarizer/src/\+Relation.\+h@{/home/samuel/\+Summarizer/src/\+Relation.\+h}}
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include \char`\"{}freeling/morfo/semdb.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}freeling/morfo/language.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$utility$>$}\\*
+{\ttfamily \#include $<$set$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+Include dependency graph for Relation.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Relation_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Relation_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structword__pos}{word\+\_\+pos}
+\begin{DoxyCompactList}\small\item\em Struct that allow us to compare words easily. \end{DoxyCompactList}\item 
+struct \hyperlink{structrelated__words}{related\+\_\+words}
+\begin{DoxyCompactList}\small\item\em Struct that represents a relationship between two words. \end{DoxyCompactList}\item 
+class \hyperlink{classRelation}{Relation}
+\begin{DoxyCompactList}\small\item\em Class \hyperlink{classRelation}{Relation} is a non-\/instantiable class which defines many virtual methods to check if a word is compatible with the \hyperlink{classRelation}{Relation} or if a word can be stored in the structures of a lexical chain. \end{DoxyCompactList}\item 
+class \hyperlink{classSameWord}{Same\+Word}
+\begin{DoxyCompactList}\small\item\em Class \hyperlink{classSameWord}{Same\+Word} represents the same word relation\+: two words are related if they are the same word. \end{DoxyCompactList}\item 
+class \hyperlink{classHypernymy}{Hypernymy}
+\begin{DoxyCompactList}\small\item\em Class \hyperlink{classHypernymy}{Hypernymy} represents the hypernymy relation\+: two words are related if one is an hypernymy of the other and the hypernymy depth is smaller or equal than a given maximum. \end{DoxyCompactList}\item 
+class \hyperlink{classSameCorefGroup}{Same\+Coref\+Group}
+\begin{DoxyCompactList}\small\item\em Class \hyperlink{classSameCorefGroup}{Same\+Coref\+Group} represents the same coreference group relation\+: two words are related if they are in the same coreference group. \end{DoxyCompactList}\end{DoxyCompactItemize}

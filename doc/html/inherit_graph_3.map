@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classRelation.html" title="Class Relation is a non&#45;instantiable class which defines many virtual methods to check if a word is c..." alt="" coords="5,56,76,83"/>
+<area shape="rect" id="node2" href="$classHypernymy.html" title="Class Hypernymy represents the hypernymy relation: two words are related if one is an hypernymy of th..." alt="" coords="141,5,230,32"/>
+<area shape="rect" id="node3" href="$classSameCorefGroup.html" title="Class SameCorefGroup represents the same coreference group relation: two words are related if they ar..." alt="" coords="124,56,247,83"/>
+<area shape="rect" id="node4" href="$classSameWord.html" title="Class SameWord represents the same word relation: two words are related if they are the same word..." alt="" coords="142,107,229,133"/>
+</map>

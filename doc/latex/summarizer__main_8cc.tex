@@ -1,0 +1,95 @@
+\hypertarget{summarizer__main_8cc}{}\section{/home/samuel/\+Summarizer/src/summarizer\+\_\+main.cc File Reference}
+\label{summarizer__main_8cc}\index{/home/samuel/\+Summarizer/src/summarizer\+\_\+main.\+cc@{/home/samuel/\+Summarizer/src/summarizer\+\_\+main.\+cc}}
+{\ttfamily \#include \char`\"{}freeling/morfo/analyzer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}freeling/morfo/util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Summarizer.\+h\char`\"{}}\\*
+Include dependency graph for summarizer\+\_\+main.\+cc\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{summarizer__main_8cc__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+analyzer\+::config\+\_\+options \hyperlink{summarizer__main_8cc_a70c445ce9ad7ae7b7331866c2afefdd1}{fill\+\_\+config} (const wstring \&path)
+\begin{DoxyCompactList}\small\item\em predeclarations \end{DoxyCompactList}\item 
+analyzer\+::invoke\+\_\+options \hyperlink{summarizer__main_8cc_a48711a601ad6eea7aafce73672db2024}{fill\+\_\+invoke} ()
+\begin{DoxyCompactList}\small\item\em Load an ad-\/hoc set of invoke options. \end{DoxyCompactList}\item 
+int \hyperlink{summarizer__main_8cc_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{summarizer__main_8cc_a70c445ce9ad7ae7b7331866c2afefdd1}{}\index{summarizer\+\_\+main.\+cc@{summarizer\+\_\+main.\+cc}!fill\+\_\+config@{fill\+\_\+config}}
+\index{fill\+\_\+config@{fill\+\_\+config}!summarizer\+\_\+main.\+cc@{summarizer\+\_\+main.\+cc}}
+\subsubsection[{fill\+\_\+config}]{\setlength{\rightskip}{0pt plus 5cm}analyzer\+::config\+\_\+options fill\+\_\+config (
+\begin{DoxyParamCaption}
+\item[{const wstring \&}]{path}
+\end{DoxyParamCaption}
+)}\label{summarizer__main_8cc_a70c445ce9ad7ae7b7331866c2afefdd1}
+
+
+predeclarations 
+
+Load an ad-\/hoc set of configuration options. Language of text to process
+
+Tokenizer configuration file
+
+Splitter configuration file
+
+Morphological analyzer options
+
+N\+E\+C config file
+
+Sense annotator and W\+S\+D config files
+
+Tagger options
+
+Chart parser config file
+
+Dependency parsers config files
+
+Coreference resolution config file \hypertarget{summarizer__main_8cc_a48711a601ad6eea7aafce73672db2024}{}\index{summarizer\+\_\+main.\+cc@{summarizer\+\_\+main.\+cc}!fill\+\_\+invoke@{fill\+\_\+invoke}}
+\index{fill\+\_\+invoke@{fill\+\_\+invoke}!summarizer\+\_\+main.\+cc@{summarizer\+\_\+main.\+cc}}
+\subsubsection[{fill\+\_\+invoke}]{\setlength{\rightskip}{0pt plus 5cm}analyzer\+::invoke\+\_\+options fill\+\_\+invoke (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{summarizer__main_8cc_a48711a601ad6eea7aafce73672db2024}
+
+
+Load an ad-\/hoc set of invoke options. 
+
+Level of analysis in input and output
+
+activate/deactivate morphological analyzer modules \hypertarget{summarizer__main_8cc_a3c04138a5bfe5d72780bb7e82a18e627}{}\index{summarizer\+\_\+main.\+cc@{summarizer\+\_\+main.\+cc}!main@{main}}
+\index{main@{main}!summarizer\+\_\+main.\+cc@{summarizer\+\_\+main.\+cc}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\label{summarizer__main_8cc_a3c04138a5bfe5d72780bb7e82a18e627}
+read Free\+Ling installation path if given, use default otherwise
+
+set config options (which modules to create, with which configuration)
+
+create analyzer
+
+set invoke options (which modules to use)
+
+load invoke options into analyzer
+
+load document to analyze
+
+analyze text, leave result in doc
+
+create summarizer
+
+summarize document
+
+print the summary 

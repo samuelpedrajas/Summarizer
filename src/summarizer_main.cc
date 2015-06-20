@@ -2,7 +2,7 @@
 #include "freeling/morfo/util.h"
  
 #include "config.h"
-#include "summarizer.h"
+#include "Summarizer.h"
  
 using namespace std;
 using namespace freeling;
@@ -45,7 +45,7 @@ int main (int argc, char **argv) {
   anlz.analyze(text, doc, true);
  
   /// create summarizer
-  summarizer sum(L"./summarizer.dat", false);
+  Summarizer sum(L"./summarizer.dat", false);
 
   /// summarize document
   list<const sentence*> selected_sentences = sum.summarize(wcout, doc);

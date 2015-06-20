@@ -1,0 +1,135 @@
+\hypertarget{structword__pos}{}\section{word\+\_\+pos Struct Reference}
+\label{structword__pos}\index{word\+\_\+pos@{word\+\_\+pos}}
+
+
+Struct that allow us to compare words easily.  
+
+
+
+
+{\ttfamily \#include $<$Relation.\+h$>$}
+
+
+
+Collaboration diagram for word\+\_\+pos\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{structword__pos__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structword__pos_a1fcd121634f7a9699cc602d73953cef3}{word\+\_\+pos} (const freeling\+::word \&w\+\_\+p, const freeling\+::sentence \&s\+\_\+p, int \hyperlink{structword__pos_a7c6cea15e21d79207980caf3a5b3a81e}{n\+\_\+paragraph}, int \hyperlink{structword__pos_a888700d9397364575480ec17eb0d91c7}{n\+\_\+sentence}, int \hyperlink{structword__pos_a5eaaede340f1d9ca3ac6819b977fd5a1}{position})
+\item 
+bool \hyperlink{structword__pos_af7b93610dbd7ad40e7e79245acc369b1}{operator==} (\hyperlink{structword__pos}{word\+\_\+pos} other) const 
+\begin{DoxyCompactList}\small\item\em Two words are equal if they are in the same position, phrase and paragraph. \end{DoxyCompactList}\item 
+bool \hyperlink{structword__pos_a2e03a153eee71b6c9179adf71fcf2f86}{operator$<$} (\hyperlink{structword__pos}{word\+\_\+pos} other) const 
+\begin{DoxyCompactList}\small\item\em One word is smaller than other one if it appears later in the text. \end{DoxyCompactList}\item 
+bool \hyperlink{structword__pos_abc4a513126b354f38b270026a28c601f}{operator$>$} (\hyperlink{structword__pos}{word\+\_\+pos} other) const 
+\begin{DoxyCompactList}\small\item\em One word is greater than other one if it appears sooner in the text. \end{DoxyCompactList}\item 
+std\+::wstring \hyperlink{structword__pos_a7027670964b84663d76819a3ff769b44}{to\+String} () const 
+\begin{DoxyCompactList}\small\item\em Get a string representation of the \hyperlink{structword__pos}{word\+\_\+pos} to debug. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const freeling\+::word \& \hyperlink{structword__pos_a9268eca742d764f0900d4bfcf7c2720e}{w}
+\item 
+const freeling\+::sentence \& \hyperlink{structword__pos_a18b13ee20fa43f3e038f76202f5e2f6e}{s}
+\item 
+int \hyperlink{structword__pos_a7c6cea15e21d79207980caf3a5b3a81e}{n\+\_\+paragraph}
+\item 
+int \hyperlink{structword__pos_a888700d9397364575480ec17eb0d91c7}{n\+\_\+sentence}
+\item 
+int \hyperlink{structword__pos_a5eaaede340f1d9ca3ac6819b977fd5a1}{position}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Struct that allow us to compare words easily. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structword__pos_a1fcd121634f7a9699cc602d73953cef3}{}\index{word\+\_\+pos@{word\+\_\+pos}!word\+\_\+pos@{word\+\_\+pos}}
+\index{word\+\_\+pos@{word\+\_\+pos}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{word\+\_\+pos}]{\setlength{\rightskip}{0pt plus 5cm}word\+\_\+pos\+::word\+\_\+pos (
+\begin{DoxyParamCaption}
+\item[{const freeling\+::word \&}]{w\+\_\+p, }
+\item[{const freeling\+::sentence \&}]{s\+\_\+p, }
+\item[{int}]{n\+\_\+paragraph, }
+\item[{int}]{n\+\_\+sentence, }
+\item[{int}]{position}
+\end{DoxyParamCaption}
+)}\label{structword__pos_a1fcd121634f7a9699cc602d73953cef3}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structword__pos_a2e03a153eee71b6c9179adf71fcf2f86}{}\index{word\+\_\+pos@{word\+\_\+pos}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}bool word\+\_\+pos\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{{\bf word\+\_\+pos}}]{other}
+\end{DoxyParamCaption}
+) const}\label{structword__pos_a2e03a153eee71b6c9179adf71fcf2f86}
+
+
+One word is smaller than other one if it appears later in the text. 
+
+\hypertarget{structword__pos_af7b93610dbd7ad40e7e79245acc369b1}{}\index{word\+\_\+pos@{word\+\_\+pos}!operator==@{operator==}}
+\index{operator==@{operator==}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool word\+\_\+pos\+::operator== (
+\begin{DoxyParamCaption}
+\item[{{\bf word\+\_\+pos}}]{other}
+\end{DoxyParamCaption}
+) const}\label{structword__pos_af7b93610dbd7ad40e7e79245acc369b1}
+
+
+Two words are equal if they are in the same position, phrase and paragraph. 
+
+\hypertarget{structword__pos_abc4a513126b354f38b270026a28c601f}{}\index{word\+\_\+pos@{word\+\_\+pos}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{operator$>$}]{\setlength{\rightskip}{0pt plus 5cm}bool word\+\_\+pos\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{{\bf word\+\_\+pos}}]{other}
+\end{DoxyParamCaption}
+) const}\label{structword__pos_abc4a513126b354f38b270026a28c601f}
+
+
+One word is greater than other one if it appears sooner in the text. 
+
+\hypertarget{structword__pos_a7027670964b84663d76819a3ff769b44}{}\index{word\+\_\+pos@{word\+\_\+pos}!to\+String@{to\+String}}
+\index{to\+String@{to\+String}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{to\+String}]{\setlength{\rightskip}{0pt plus 5cm}wstring word\+\_\+pos\+::to\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\label{structword__pos_a7027670964b84663d76819a3ff769b44}
+
+
+Get a string representation of the \hyperlink{structword__pos}{word\+\_\+pos} to debug. 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structword__pos_a7c6cea15e21d79207980caf3a5b3a81e}{}\index{word\+\_\+pos@{word\+\_\+pos}!n\+\_\+paragraph@{n\+\_\+paragraph}}
+\index{n\+\_\+paragraph@{n\+\_\+paragraph}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{n\+\_\+paragraph}]{\setlength{\rightskip}{0pt plus 5cm}int word\+\_\+pos\+::n\+\_\+paragraph}\label{structword__pos_a7c6cea15e21d79207980caf3a5b3a81e}
+\hypertarget{structword__pos_a888700d9397364575480ec17eb0d91c7}{}\index{word\+\_\+pos@{word\+\_\+pos}!n\+\_\+sentence@{n\+\_\+sentence}}
+\index{n\+\_\+sentence@{n\+\_\+sentence}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{n\+\_\+sentence}]{\setlength{\rightskip}{0pt plus 5cm}int word\+\_\+pos\+::n\+\_\+sentence}\label{structword__pos_a888700d9397364575480ec17eb0d91c7}
+\hypertarget{structword__pos_a5eaaede340f1d9ca3ac6819b977fd5a1}{}\index{word\+\_\+pos@{word\+\_\+pos}!position@{position}}
+\index{position@{position}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{position}]{\setlength{\rightskip}{0pt plus 5cm}int word\+\_\+pos\+::position}\label{structword__pos_a5eaaede340f1d9ca3ac6819b977fd5a1}
+\hypertarget{structword__pos_a18b13ee20fa43f3e038f76202f5e2f6e}{}\index{word\+\_\+pos@{word\+\_\+pos}!s@{s}}
+\index{s@{s}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{s}]{\setlength{\rightskip}{0pt plus 5cm}const freeling\+::sentence\& word\+\_\+pos\+::s}\label{structword__pos_a18b13ee20fa43f3e038f76202f5e2f6e}
+\hypertarget{structword__pos_a9268eca742d764f0900d4bfcf7c2720e}{}\index{word\+\_\+pos@{word\+\_\+pos}!w@{w}}
+\index{w@{w}!word\+\_\+pos@{word\+\_\+pos}}
+\subsubsection[{w}]{\setlength{\rightskip}{0pt plus 5cm}const freeling\+::word\& word\+\_\+pos\+::w}\label{structword__pos_a9268eca742d764f0900d4bfcf7c2720e}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/samuel/\+Summarizer/src/\hyperlink{Relation_8h}{Relation.\+h}\item 
+/home/samuel/\+Summarizer/src/\hyperlink{Relation_8cc}{Relation.\+cc}\end{DoxyCompactItemize}

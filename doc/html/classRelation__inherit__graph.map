@@ -1,0 +1,5 @@
+<map id="Relation" name="Relation">
+<area shape="rect" id="node2" href="$classHypernymy.html" title="Class Hypernymy represents the hypernymy relation: two words are related if one is an hypernymy of th..." alt="" coords="5,248,184,369"/>
+<area shape="rect" id="node3" href="$classSameCorefGroup.html" title="Class SameCorefGroup represents the same coreference group relation: two words are related if they ar..." alt="" coords="208,248,387,369"/>
+<area shape="rect" id="node4" href="$classSameWord.html" title="Class SameWord represents the same word relation: two words are related if they are the same word..." alt="" coords="411,248,589,369"/>
+</map>

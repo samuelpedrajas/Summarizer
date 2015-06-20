@@ -16,8 +16,8 @@ PATHS=-L$(FREELINGDIR)/lib -I$(FREELINGDIR)/include -L$(BOOSTLIBDIR) -I$(BOOSTIN
 
 all: summarizer_main
 
-summarizer_main: summarizer_main.cc summarizer.cc summarizer.h lexical_chain.h lexical_chain.cc relation.h relation.cc
-	g++ -std=c++0x summarizer_main.cc summarizer.cc lexical_chain.cc relation.cc -lfreeling -lboost_system -o summarizer_main $(PATHS)
+summarizer_main: summarizer_main.cc Summarizer.cc Summarizer.h LexicalChain.h LexicalChain.cc Relation.h Relation.cc
+	g++ -std=c++0x summarizer_main.cc Summarizer.cc LexicalChain.cc Relation.cc -lfreeling -lboost_system -o summarizer_main $(PATHS)
 
 clean:
-	rm -f summarizer_main
+	rm -f summarizer_main *~

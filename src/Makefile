@@ -14,10 +14,10 @@ FREELINGSHARE=/usr/local/share/freeling
 # paths for compilation commands below
 PATHS=-L$(FREELINGDIR)/lib -I$(FREELINGDIR)/include -L$(BOOSTLIBDIR) -I$(BOOSTINCLUDEDIR)
 
-all: summarizer_test
+all: summarizer_main
 
-summarizer_test: summarizer_test.cc summarizer.cc summarizer.h lexical_chain.h lexical_chain.cc relation.h relation.cc
-	g++ -std=c++0x summarizer_test.cc summarizer.cc lexical_chain.cc relation.cc -lfreeling -lboost_system -o summarizer_test $(PATHS)
+summarizer_main: summarizer_main.cc summarizer.cc summarizer.h lexical_chain.h lexical_chain.cc relation.h relation.cc
+	g++ -std=c++0x summarizer_main.cc summarizer.cc lexical_chain.cc relation.cc -lfreeling -lboost_system -o summarizer_main $(PATHS)
 
 clean:
-	rm -f summarizer_test
+	rm -f summarizer_main

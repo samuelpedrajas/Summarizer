@@ -3,18 +3,19 @@
 using namespace freeling;
 using namespace std;
 
-summarizer::summarizer(const wstring &datFile) {
+summarizer::summarizer(const wstring &datFile, bool debug) {
 
 	// Default configuration
+	this->debug = debug;
 	hypernymy_depth = 2;
 	alpha = 0.9;
 	remove_used_lexical_chains = FALSE;
 	only_strong = FALSE;
 	num_words = 50;
-	this->semdb_path = semdb_path;
+	this->semdb_path = L"/usr/local/share/freeling/en/semdb.dat";
 	heuristic = L"FirstWord"; // FirstWord, FirstMostWeightedWord, SumOfChainWeights
 	relation::max_distance = 50;
-	//used_tags = {L"SameWord", L"Hypernymy", L"SameCoreferenceGroup"};
+	//used_relations = {L"SameWord", L"Hypernymy", L"SameCoreferenceGroup"};
 
 	config_file cfg;
 	enum sections {GENERAL, RELATIONS};
@@ -62,7 +63,7 @@ summarizer::summarizer(const wstring &datFile) {
 				hypernymy_depth = stoi(value1);
 				alpha = stof(value2);
 			}
-			used_tags.insert(elem);
+			used_relations.insert(elem);
 			break;
 		}
 
@@ -71,7 +72,7 @@ summarizer::summarizer(const wstring &datFile) {
 	}
 	cfg.close();
 
-	if (used_tags.size() == 0) used_tags = {L"SameWord", L"Hypernymy",
+	if (used_relations.size() == 0) used_relations = {L"SameWord", L"Hypernymy",
 		                                        L"SameCoreferenceGroup"
 		                                       };
 
@@ -85,8 +86,8 @@ summarizer::~summarizer() {
 double summarizer::average_scores(map<wstring, list<lexical_chain> > &chains) const {
 	double avg = 0;
 	int size = 0;
-	for (set<wstring>::const_iterator it_tag = used_tags.begin();
-	        it_tag != used_tags.end(); it_tag++) {
+	for (set<wstring>::const_iterator it_tag = used_relations.begin();
+	        it_tag != used_relations.end(); it_tag++) {
 		list<lexical_chain> &lexical_chains = chains[*(it_tag)];
 		size += lexical_chains.size();
 		for (list<lexical_chain>::iterator it = lexical_chains.begin();
@@ -101,8 +102,8 @@ double summarizer::standard_deviation_scores(map<wstring, list<lexical_chain> > 
         const double avg) const {
 	double sd = 0;
 	int size = 0;
-	for (set<wstring>::const_iterator it_tag = used_tags.begin();
-	        it_tag != used_tags.end(); it_tag++) {
+	for (set<wstring>::const_iterator it_tag = used_relations.begin();
+	        it_tag != used_relations.end(); it_tag++) {
 		list<lexical_chain> &lexical_chains = chains[*(it_tag)];
 		size += lexical_chains.size();
 		for (list<lexical_chain>::iterator it = lexical_chains.begin();
@@ -115,8 +116,8 @@ double summarizer::standard_deviation_scores(map<wstring, list<lexical_chain> > 
 
 list<lexical_chain> summarizer::map_to_lists(map<wstring, list<lexical_chain> > &chains) const {
 	list<lexical_chain> spliced_lists;
-	for (set<wstring>::const_iterator it_tag = used_tags.begin();
-	        it_tag != used_tags.end(); it_tag++) {
+	for (set<wstring>::const_iterator it_tag = used_relations.begin();
+	        it_tag != used_relations.end(); it_tag++) {
 		list<lexical_chain> &lexical_chains = chains[*(it_tag)];
 		spliced_lists.splice(spliced_lists.end(), lexical_chains);
 	}
@@ -251,7 +252,7 @@ list<word_pos> summarizer::sum_of_chain_weights(wostream &sout,
 	return wp_list;
 }
 
-relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const {
+relation * summarizer::label_to_relation(const wstring ws, wostream &sout) const {
 	relation * rel;
 	if (ws == L"SameWord") {
 		rel = new SameWord(sout);
@@ -265,9 +266,9 @@ relation * summarizer::tag_to_rel(const wstring ws, wostream &sout) const {
 
 map<wstring, list<lexical_chain>> summarizer::build_lexical_chains(wostream &sout, const document &doc) {
 	map<wstring, list<lexical_chain>> chains;
-	for (set<wstring>::const_iterator it_t = used_tags.begin(); it_t != used_tags.end(); it_t++) {
+	for (set<wstring>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
 		wstring tag = *it_t;
-		relation * rel = tag_to_rel(tag, sout);
+		relation * rel = label_to_relation(tag, sout);
 		int i = 0;
 		int j = 0;
 		for (list<paragraph>::const_iterator it_p = doc.begin(); it_p != doc.end(); it_p++) {
@@ -297,7 +298,7 @@ map<wstring, list<lexical_chain>> summarizer::build_lexical_chains(wostream &sou
 }
 
 void summarizer::remove_one_word_lexical_chains(map<wstring, list<lexical_chain>> &chains) {
-	for (set<wstring>::const_iterator it_t = used_tags.begin(); it_t != used_tags.end(); it_t++) {
+	for (set<wstring>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
 		wstring tag = *it_t;
 		list<lexical_chain> &lc = chains[tag];
 		list<lexical_chain>::iterator it = lc.begin();
@@ -315,7 +316,7 @@ void summarizer::remove_weak_lexical_chains(map<wstring, list<lexical_chain>> &c
 	double avg = average_scores(chains);
 	double sd = standard_deviation_scores(chains, avg);
 
-	for (set<wstring>::const_iterator it_tag = used_tags.begin(); it_tag != used_tags.end(); it_tag++) {
+	for (set<wstring>::const_iterator it_tag = used_relations.begin(); it_tag != used_relations.end(); it_tag++) {
 		list<lexical_chain> &lexical_chains = chains[*(it_tag)];
 		list<lexical_chain>::iterator it = lexical_chains.begin();
 
@@ -329,7 +330,7 @@ void summarizer::remove_weak_lexical_chains(map<wstring, list<lexical_chain>> &c
 }
 
 void summarizer::print_lexical_chains(map<wstring, list<lexical_chain>> &chains, wostream &sout) {
-	for (set<wstring>::const_iterator it_tag = used_tags.begin(); it_tag != used_tags.end(); it_tag++) {
+	for (set<wstring>::const_iterator it_tag = used_relations.begin(); it_tag != used_relations.end(); it_tag++) {
 		list<lexical_chain> &lexical_chains = chains[*(it_tag)];
 		for (list<lexical_chain>::iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++)
 		{
@@ -355,11 +356,13 @@ list<const sentence*> summarizer::summarize(wostream &sout, const document &doc)
 	remove_one_word_lexical_chains(chains);
 
 	if (only_strong) {
+		// remove weak lexical chains
 		remove_weak_lexical_chains(chains);
 	}
 
-	// print chains
-	print_lexical_chains(chains, sout);
+	if (debug)
+		// print chains
+		print_lexical_chains(chains, sout);
 
 	list<word_pos> wp_res;
 	if (heuristic == L"FirstMostWeightedWord") {

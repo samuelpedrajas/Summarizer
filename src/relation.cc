@@ -45,6 +45,10 @@ relation::relation(const wstring s, const wstring t) : label(s), compatible_tag(
 
 }
 
+relation::~relation() {
+
+}
+
 int relation::max_distance = 0;
 
 bool relation::is_compatible(const word &w) const {

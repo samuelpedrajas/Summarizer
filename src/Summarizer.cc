@@ -272,11 +272,11 @@ map<wstring, list<LexicalChain>> Summarizer::build_lexical_chains(wostream &sout
 		for (list<paragraph>::const_iterator it_p = doc.begin(); it_p != doc.end(); it_p++) {
 			for (list<sentence>::const_iterator it_s = it_p->begin(); it_s != it_p->end(); it_s++) {
 				int k = 0;
+				sout << L"FIRST : " << it_s->begin()->get_form() << L" - " << (--(--it_s->end()))->get_form() << endl;
 				for (list<word>::const_iterator it_w = it_s->begin(); it_w != it_s->end(); it_w++) {
 					if (rel->is_compatible(*it_w)) {
 						list<LexicalChain> &lc = chains[tag];
 						bool inserted = false;
-
 						// computing the word in every lexical chain
 						for (list<LexicalChain>::iterator it_lc = lc.begin(); it_lc != lc.end(); it_lc++) {
 							inserted = inserted || it_lc->compute_word((*it_w), (*it_s), doc, i, j, k, sout);

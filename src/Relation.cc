@@ -218,10 +218,10 @@ list<word_pos> Hypernymy::order_words_by_weight(const unordered_map<wstring,
 }
 
 int Hypernymy::hypernymyAux(wstring s1, wstring s2, int k) const {
-	if (s1 == s2) {
-		return k;
-	}
 	if (k < depth) {
+		if (s1 == s2) {
+			return k;
+		}
 		sense_info si = semdb->get_sense_info(s1);
 		list<wstring> & parents = si.parents;
 		for (list<wstring>::const_iterator it = parents.begin(); it != parents.end(); it++) {

@@ -1,6 +1,6 @@
 <General>
 RemoveUsedChains false
-OnlyStrong true
+OnlyStrong false
 NumWords 100
 SemDBPath /usr/local/share/freeling/en/semdb.dat
 Heuristic FirstWord
@@ -8,7 +8,5 @@ MaxDistanceBetweenWords 5
 </General>
 
 <Relations>
-SameWord
 Hypernymy 2 0.9
-SameCoreferenceGroup
 </Relations>

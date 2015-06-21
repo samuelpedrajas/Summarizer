@@ -45,7 +45,7 @@ int main (int argc, char **argv) {
   anlz.analyze(text, doc, true);
  
   /// create summarizer
-  Summarizer sum(L"./summarizer.dat", false);
+  Summarizer sum(L"./summarizer.dat", true);
 
   /// summarize document
   list<const sentence*> selected_sentences = sum.summarize(wcout, doc);

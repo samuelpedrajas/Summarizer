@@ -1,6 +1,6 @@
-<map id="/home/samuel/Summarizer/src/LexicalChain.h" name="/home/samuel/Summarizer/src/LexicalChain.h">
-<area shape="rect" id="node2" href="$LexicalChain_8cc.html" title="/home/samuel/Summarizer\l/src/LexicalChain.cc" alt="" coords="5,95,184,136"/>
-<area shape="rect" id="node3" href="$Summarizer_8h.html" title="/home/samuel/Summarizer\l/src/Summarizer.h" alt="" coords="208,95,387,136"/>
-<area shape="rect" id="node4" href="$Summarizer_8cc.html" title="/home/samuel/Summarizer\l/src/Summarizer.cc" alt="" coords="107,184,285,225"/>
-<area shape="rect" id="node5" href="$summarizer__main_8cc.html" title="/home/samuel/Summarizer\l/src/summarizer_main.cc" alt="" coords="309,184,488,225"/>
+<map id="LexicalChain.h" name="LexicalChain.h">
+<area shape="rect" id="node2" href="$LexicalChain_8cc.html" title="LexicalChain.cc" alt="" coords="5,80,120,107"/>
+<area shape="rect" id="node3" href="$Summarizer_8h.html" title="Summarizer.h" alt="" coords="145,80,247,107"/>
+<area shape="rect" id="node4" href="$Summarizer_8cc.html" title="Summarizer.cc" alt="" coords="66,155,177,181"/>
+<area shape="rect" id="node5" href="$summarizer__main_8cc.html" title="summarizer_main.cc" alt="" coords="201,155,343,181"/>
 </map>

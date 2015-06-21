@@ -219,8 +219,6 @@ list<word_pos> Summarizer::sum_of_chain_weights(wostream &sout,
 	for (unordered_map<int, pair<int, const word_pos*> >::const_iterator it = sentence_scores.begin();
 	        it != sentence_scores.end(); it++) {
 		score_wp_list.push_back(it->second);
-		sout << L"SENTENCE: " << it->second.second->n_sentence << L" SCORE: " <<
-		     it->second.first << endl;
 	}
 
 	score_wp_list.sort(order_by_scores);
@@ -241,7 +239,7 @@ list<word_pos> Summarizer::sum_of_chain_weights(wostream &sout,
 		        it_s != s.words_end(); it_s++)
 			if (it_s->get_tag()[0] != L'F') s_size++;
 
-		sout << L"NUM words: " << s_size << endl;
+
 		if (s_size + acc_n_words <= num_words) {
 			acc_n_words += s_size;
 			wp_list.push_back(*wp);
@@ -272,7 +270,6 @@ map<wstring, list<LexicalChain>> Summarizer::build_lexical_chains(wostream &sout
 		for (list<paragraph>::const_iterator it_p = doc.begin(); it_p != doc.end(); it_p++) {
 			for (list<sentence>::const_iterator it_s = it_p->begin(); it_s != it_p->end(); it_s++) {
 				int k = 0;
-				sout << L"FIRST : " << it_s->begin()->get_form() << L" - " << (--(--it_s->end()))->get_form() << endl;
 				for (list<word>::const_iterator it_w = it_s->begin(); it_w != it_s->end(); it_w++) {
 					if (rel->is_compatible(*it_w)) {
 						list<LexicalChain> &lc = chains[tag];

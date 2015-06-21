@@ -1,5 +1,5 @@
 <General>
-RemoveUsedChains false
+RemoveUsedChains true
 OnlyStrong false
 NumWords 100
 SemDBPath /usr/local/share/freeling/en/semdb.dat

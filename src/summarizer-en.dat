@@ -8,6 +8,5 @@ MaxDistanceBetweenWords 3
 </General>
 
 <Relations>
-SameWord ^(NP|VB|NN)
 Hypernymy ^(NP|VB|NN) 2 0.9
 </Relations>

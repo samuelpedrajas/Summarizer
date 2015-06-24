@@ -44,8 +44,19 @@ int main (int argc, char **argv) {
   document doc;
   anlz.analyze(text, doc, true);
  
+  for (list<paragraph>::const_iterator it_p = doc.begin(); it_p != doc.end(); it_p++) {
+    int j = 0;
+    for (list<sentence>::const_iterator it_s = it_p->begin(); it_s != it_p->end(); it_s++) {
+      int k = 0;
+      for (list<word>::const_iterator it_w = it_s->begin(); it_w != it_s->end(); it_w++) {
+        wcout << it_w->get_form() << L" -> " << it_w->get_tag() << endl;
+      }
+    }
+  }
+
+
   /// create summarizer
-  Summarizer sum(L"./summarizer.dat", true);
+  Summarizer sum(L"./summarizer.dat");
 
   /// summarize document
   list<const sentence*> selected_sentences = sum.summarize(wcout, doc);
@@ -77,7 +88,7 @@ analyzer::config_options fill_config(const wstring &path) {
   analyzer::config_options cfg;
  
   /// Language of text to process
-  cfg.Lang = L"en";
+  cfg.Lang = L"ca";
  
   // path to language specific data
   wstring lpath = path + L"/" + cfg.Lang + L"/";

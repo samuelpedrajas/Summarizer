@@ -62,8 +62,8 @@ bool Relation::compute_word (const word &w, const sentence &s, const document &d
 
 }
 
-SameWord::SameWord(wostream &sout) : Relation(L"Same Word", L"^(NP|VB|NN)") {
-	this->sout = &sout;
+SameWord::SameWord(wstring expr) : Relation(L"Same Word", expr) {
+
 }
 
 bool SameWord::compute_word (const word &w, const sentence &s, const document &doc,
@@ -118,12 +118,11 @@ list<word_pos> SameWord::order_words_by_weight(const unordered_map<wstring,
 	return res;
 }
 
-Hypernymy::Hypernymy(int k, double alpha, const wstring &semfile,
-                     wostream &sout) : Relation(L"Hypernymy", L"^(VB|NN|NP)") {
+Hypernymy::Hypernymy(int k, double alpha, const wstring &semfile, wstring expr)
+		: Relation(L"Hypernymy", expr) {
 	if (semdb == NULL) semdb = new semanticDB(semfile);
 	depth = k;
 	this->alpha = alpha;
-	this->sout = &sout;
 }
 
 semanticDB * Hypernymy::semdb = NULL;
@@ -273,8 +272,8 @@ bool Hypernymy::compute_word (const word &w, const sentence &s, const document &
 	return inserted;
 }
 
-SameCorefGroup::SameCorefGroup(wostream &sout) : Relation(L"Same Coreference Group", L"^(NP|NN|PRP|Z)") {
-	this->sout = &sout;
+SameCorefGroup::SameCorefGroup(wstring expr) : Relation(L"Same Coreference Group", expr) {
+
 }
 
 double SameCorefGroup::get_homogeneity_index(const list<word_pos> &words, const list<related_words> &relations,

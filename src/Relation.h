@@ -95,8 +95,6 @@ protected:
 	/// If a word tag matchs with compatible_tag, then the word is compatible
 	/// with the relation.
 	const freeling::regexp compatible_tag;
-	/// Pointer to a wostream to debug.
-	std::wostream  * sout;
 };
 
 ////////////////////////////////////////////////////////////////
@@ -109,7 +107,7 @@ class SameWord : public Relation {
 public:
 
 	/// Constructor
-	SameWord(std::wostream &sout);
+	SameWord(std::wstring expr);
 
 	/// Computes the homogeinity index of the given structures using the specific formula
 	/// of this relation.
@@ -144,7 +142,7 @@ class Hypernymy : public Relation {
 public:
 
 	/// Constructor
-	Hypernymy(int k, double alpha, const std::wstring &semfile, std::wostream &sout);
+	Hypernymy(int k, double alpha, const std::wstring &semfile, std::wstring expr);
 
 	/// Computes the homogeinity index of the given structures using the specific formula
 	/// of this relation.
@@ -192,7 +190,7 @@ class SameCorefGroup : public Relation {
 public:
 
 	/// Constructor
-	SameCorefGroup(std::wostream &sout);
+	SameCorefGroup(std::wstring expr);
 
 	/// Computes the homogeinity index of the given structures using the specific formula
 	/// of this relation.

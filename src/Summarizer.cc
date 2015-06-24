@@ -3,10 +3,9 @@
 using namespace freeling;
 using namespace std;
 
-Summarizer::Summarizer(const wstring &datFile, bool debug) {
+Summarizer::Summarizer(const wstring &datFile) {
 
 	// Default configuration
-	this->debug = debug;
 	hypernymy_depth = 2;
 	alpha = 0.9;
 	remove_used_lexical_chains = FALSE;
@@ -54,15 +53,15 @@ Summarizer::Summarizer(const wstring &datFile, bool debug) {
 		case RELATIONS: {
 			wistringstream sin;
 			sin.str(line);
-			wstring elem;
-			sin >> elem;
+			wstring elem, value0;
+			sin >> elem >> value0;
 			if (elem == L"Hypernymy") {
 				wstring value1, value2;
 				sin >> value1 >> value2;
 				hypernymy_depth = stoi(value1);
 				alpha = stof(value2);
 			}
-			used_relations.insert(elem);
+			used_relations.insert(label_to_relation(elem, value0));
 			break;
 		}
 
@@ -72,7 +71,7 @@ Summarizer::Summarizer(const wstring &datFile, bool debug) {
 	cfg.close();
 
 	if (used_relations.size() == 0)
-		used_relations = {L"SameWord", L"Hypernymy", L"SameCoreferenceGroup"};
+		used_relations.insert(label_to_relation(L"SameWord", L"^(NP|VB|NN)"));
 
 	TRACE(1, L"Module sucessfully loaded");
 }
@@ -84,9 +83,9 @@ Summarizer::~Summarizer() {
 double Summarizer::average_scores(map<wstring, list<LexicalChain> > &chains) const {
 	double avg = 0;
 	int size = 0;
-	for (set<wstring>::const_iterator it_tag = used_relations.begin();
-	        it_tag != used_relations.end(); it_tag++) {
-		list<LexicalChain> &lexical_chains = chains[*(it_tag)];
+	for (set<Relation*>::const_iterator it_r = used_relations.begin();
+	        it_r != used_relations.end(); it_r++) {
+		list<LexicalChain> &lexical_chains = chains[(*it_r)->label];
 		size += lexical_chains.size();
 		for (list<LexicalChain>::iterator it = lexical_chains.begin();
 		        it != lexical_chains.end(); it++) {
@@ -100,9 +99,9 @@ double Summarizer::standard_deviation_scores(map<wstring, list<LexicalChain> > &
         const double avg) const {
 	double sd = 0;
 	int size = 0;
-	for (set<wstring>::const_iterator it_tag = used_relations.begin();
-	        it_tag != used_relations.end(); it_tag++) {
-		list<LexicalChain> &lexical_chains = chains[*(it_tag)];
+	for (set<Relation*>::const_iterator it_r = used_relations.begin();
+	        it_r != used_relations.end(); it_r++) {
+		list<LexicalChain> &lexical_chains = chains[(*it_r)->label];
 		size += lexical_chains.size();
 		for (list<LexicalChain>::iterator it = lexical_chains.begin();
 		        it != lexical_chains.end(); it++) {
@@ -114,9 +113,9 @@ double Summarizer::standard_deviation_scores(map<wstring, list<LexicalChain> > &
 
 list<LexicalChain> Summarizer::map_to_lists(map<wstring, list<LexicalChain> > &chains) const {
 	list<LexicalChain> spliced_lists;
-	for (set<wstring>::const_iterator it_tag = used_relations.begin();
-	        it_tag != used_relations.end(); it_tag++) {
-		list<LexicalChain> &lexical_chains = chains[*(it_tag)];
+	for (set<Relation*>::const_iterator it_r = used_relations.begin();
+	        it_r != used_relations.end(); it_r++) {
+		list<LexicalChain> &lexical_chains = chains[(*it_r)->label];
 		spliced_lists.splice(spliced_lists.end(), lexical_chains);
 	}
 	return spliced_lists;
@@ -248,23 +247,22 @@ list<word_pos> Summarizer::sum_of_chain_weights(wostream &sout,
 	return wp_list;
 }
 
-Relation * Summarizer::label_to_relation(const wstring ws, wostream &sout) const {
+Relation * Summarizer::label_to_relation(const wstring ws, std::wstring expr) const {
 	Relation * rel;
 	if (ws == L"SameWord") {
-		rel = new SameWord(sout);
+		rel = new SameWord(expr);
 	} else if (ws == L"Hypernymy") {
-		rel = new Hypernymy(hypernymy_depth, alpha, semdb_path, sout);
+		rel = new Hypernymy(hypernymy_depth, alpha, semdb_path, expr);
 	} else if (ws == L"SameCoreferenceGroup") {
-		rel = new SameCorefGroup(sout);
+		rel = new SameCorefGroup(expr);
 	}
 	return rel;
 }
 
 map<wstring, list<LexicalChain>> Summarizer::build_lexical_chains(wostream &sout, const document &doc) {
 	map<wstring, list<LexicalChain>> chains;
-	for (set<wstring>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
-		wstring tag = *it_t;
-		Relation * rel = label_to_relation(tag, sout);
+	for (set<Relation*>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
+		Relation * rel = *it_t;
 		int i = 0;
 		int j = 0;
 		for (list<paragraph>::const_iterator it_p = doc.begin(); it_p != doc.end(); it_p++) {
@@ -272,7 +270,7 @@ map<wstring, list<LexicalChain>> Summarizer::build_lexical_chains(wostream &sout
 				int k = 0;
 				for (list<word>::const_iterator it_w = it_s->begin(); it_w != it_s->end(); it_w++) {
 					if (rel->is_compatible(*it_w)) {
-						list<LexicalChain> &lc = chains[tag];
+						list<LexicalChain> &lc = chains[rel->label];
 						bool inserted = false;
 						// computing the word in every lexical chain
 						for (list<LexicalChain>::iterator it_lc = lc.begin(); it_lc != lc.end(); it_lc++) {
@@ -296,9 +294,8 @@ map<wstring, list<LexicalChain>> Summarizer::build_lexical_chains(wostream &sout
 }
 
 void Summarizer::remove_one_word_lexical_chains(map<wstring, list<LexicalChain>> &chains) {
-	for (set<wstring>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
-		wstring tag = *it_t;
-		list<LexicalChain> &lc = chains[tag];
+	for (set<Relation*>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
+		list<LexicalChain> &lc = chains[(*it_t)->label];
 		list<LexicalChain>::iterator it = lc.begin();
 
 		while (it != lc.end())
@@ -314,8 +311,8 @@ void Summarizer::remove_weak_lexical_chains(map<wstring, list<LexicalChain>> &ch
 	double avg = average_scores(chains);
 	double sd = standard_deviation_scores(chains, avg);
 
-	for (set<wstring>::const_iterator it_tag = used_relations.begin(); it_tag != used_relations.end(); it_tag++) {
-		list<LexicalChain> &lexical_chains = chains[*(it_tag)];
+	for (set<Relation*>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
+		list<LexicalChain> &lexical_chains = chains[(*it_t)->label];
 		list<LexicalChain>::iterator it = lexical_chains.begin();
 
 		while (it != lexical_chains.end())
@@ -328,8 +325,8 @@ void Summarizer::remove_weak_lexical_chains(map<wstring, list<LexicalChain>> &ch
 }
 
 void Summarizer::print_lexical_chains(map<wstring, list<LexicalChain>> &chains, wostream &sout) {
-	for (set<wstring>::const_iterator it_tag = used_relations.begin(); it_tag != used_relations.end(); it_tag++) {
-		list<LexicalChain> &lexical_chains = chains[*(it_tag)];
+	for (set<Relation*>::const_iterator it_t = used_relations.begin(); it_t != used_relations.end(); it_t++) {
+		list<LexicalChain> &lexical_chains = chains[(*it_t)->label];
 		for (list<LexicalChain>::iterator it = lexical_chains.begin(); it != lexical_chains.end(); it++)
 		{
 			sout << "-------------------------------" << endl;
@@ -358,8 +355,7 @@ list<const sentence*> Summarizer::summarize(wostream &sout, const document &doc)
 		remove_weak_lexical_chains(chains);
 
 	// print chains
-	if (debug)
-		print_lexical_chains(chains, sout);
+	print_lexical_chains(chains, sout);
 
 	// select most relevant sentences using one heuristic
 	list<word_pos> wp_res;

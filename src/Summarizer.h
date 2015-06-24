@@ -20,7 +20,7 @@
 class Summarizer {
 public:
     /// Constructor
-    Summarizer(const std::wstring &datFile, bool debug);
+    Summarizer(const std::wstring &datFile);
 
     /// Destructor
     ~Summarizer();
@@ -43,7 +43,7 @@ private:
     /// Path to the semantic DB.
     std::wstring semdb_path;
     /// A set with the relations that will be used.
-    std::set<std::wstring> used_relations;
+    std::set<Relation*> used_relations;
     /// A string that indicates the heuristic that will be used.
     std::wstring heuristic;
     /// If debug is true, the lexical chains are printed.
@@ -98,7 +98,7 @@ private:
             std::map<std::wstring, std::list<LexicalChain> > &chains) const;
 
     /// Creates a relation of the subclass specified by ws and returns a pointer to it.
-    Relation * label_to_relation(const std::wstring ws, std::wostream &sout) const;
+    Relation * label_to_relation(const std::wstring ws, std::wstring expr) const;
 
     /// Transforms a list of word_pos to a list of sentences.
     std::list<const freeling::sentence*> wp_to_sp(std::list<word_pos> &wp_l);

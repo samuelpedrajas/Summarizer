@@ -1,4 +1,3 @@
-
 # Makefile to build the simple examples of FreeLing usage.
 # If your installation paths are not /usr/local, call make with:
 #
@@ -14,13 +13,10 @@ FREELINGSHARE=/usr/local/share/freeling
 # paths for compilation commands below
 PATHS=-L$(FREELINGDIR)/lib -I$(FREELINGDIR)/include -L$(BOOSTLIBDIR) -I$(BOOSTINCLUDEDIR)
 
-all: doc_to_conll print_with_span
+all: summarizer_main
 
-doc_to_conll: doc_to_conll.cc
-	g++ -std=c++0x doc_to_conll.cc -lfreeling -lboost_system -o doc_to_conll $(PATHS)
-
-print_with_span: print_with_span.cc
-	g++ -std=c++0x print_with_span.cc -lfreeling -lboost_system -o print_with_span $(PATHS)
+summarizer_main: summarizer_main.cc summarizer.cc summarizer.h lexical_chain.h lexical_chain.cc relation.h relation.cc
+	g++ -std=c++0x summarizer_main.cc summarizer.cc lexical_chain.cc relation.cc -lfreeling -lboost_system -o summarizer_main $(PATHS)
 
 clean:
-	rm -f doc_to_conll print_with_span
+	rm -f summarizer_main *~

@@ -1,14 +1,11 @@
 <General>
 RemoveUsedChains false
 OnlyStrong false
-NumWords 100
-SemDBPath /usr/local/share/freeling/en/semdb.dat
+SemDBPath $FREELINGSHARE/en/semdb.dat
 Heuristic FirstWord
-MaxDistanceBetweenWords 20
+MaxDistanceBetweenWords 5
 </General>
 
 <Relations>
-SameWord
-Hypernymy 3
-SameCoreferenceGroup
+Hypernymy ^(NP|VB|NN) 2 0.9
 </Relations>
